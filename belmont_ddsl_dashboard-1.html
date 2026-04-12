@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belmont FC – Season Dashboard 25/26</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#1a6b3c;--green-mid:#22874d;--gold:#f0b429;
+  --dark:#0b1a12;--mid:#112b1d;--card:#0f2318;--card2:#142e1f;
+  --text:#e2f0e8;--muted:#6b9e7e;--border:rgba(255,255,255,0.07);
+  --red:#e05252;--blue:#5295e0;--win:#5dd68a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;
+  background-image:radial-gradient(ellipse 100% 55% at 50% -5%,rgba(26,107,60,0.3) 0%,transparent 65%);}
+
+/* HEADER */
+.header{padding:24px 32px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.club-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.4rem);letter-spacing:0.05em;line-height:1;}
+.club-title span{color:var(--gold);}
+.sub{font-size:0.67rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:8px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--win);box-shadow:0 0 6px var(--win);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+.hdr-r{display:flex;align-items:center;gap:10px;}
+.hdr-updated{text-align:right;}
+.hdr-updated .dlbl{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);}
+.hdr-updated .dval{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.06em;color:var(--gold);}
+
+/* UPLOAD BUTTON */
+.upload-btn{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border);
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.74rem;font-weight:500;
+  padding:8px 14px;border-radius:7px;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.upload-btn:hover{border-color:var(--green-mid);background:rgba(26,107,60,0.2);}
+.upload-btn svg{opacity:0.7;}
+.clear-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid rgba(224,82,82,0.3);
+  color:var(--red);font-family:'DM Sans',sans-serif;font-size:0.74rem;font-weight:500;
+  padding:8px 14px;border-radius:7px;cursor:pointer;transition:all 0.15s;white-space:nowrap;opacity:0.7;}
+.clear-btn:hover{border-color:var(--red);opacity:1;background:rgba(224,82,82,0.08);}
+#fileInput{display:none;}
+
+/* UPLOAD MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 32px;width:min(480px,90vw);box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.05em;margin-bottom:6px;}
+.modal p{font-size:0.78rem;color:var(--muted);line-height:1.55;margin-bottom:18px;}
+.modal p code{background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:3px;font-size:0.75rem;color:var(--text);}
+.drop-zone{border:2px dashed rgba(107,158,126,0.35);border-radius:8px;padding:28px;text-align:center;
+  cursor:pointer;transition:all 0.15s;margin-bottom:16px;}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--green-mid);background:rgba(26,107,60,0.1);}
+.drop-zone .dz-icon{font-size:2rem;margin-bottom:8px;}
+.drop-zone .dz-lbl{font-size:0.8rem;color:var(--muted);}
+.drop-zone .dz-lbl span{color:var(--win);text-decoration:underline;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;}
+.modal-cancel{background:transparent;border:1px solid var(--border);color:var(--muted);
+  font-family:'DM Sans',sans-serif;font-size:0.76rem;padding:7px 16px;border-radius:5px;cursor:pointer;transition:all 0.13s;}
+.modal-cancel:hover{border-color:var(--muted);color:var(--text);}
+.modal-confirm{background:var(--green);border:1px solid var(--green-mid);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:600;padding:7px 16px;border-radius:5px;cursor:pointer;transition:all 0.13s;display:none;}
+.modal-confirm:hover{background:var(--green-mid);}
+.upload-status{font-size:0.74rem;margin-top:10px;min-height:18px;color:var(--muted);}
+.upload-status.ok{color:var(--win);}
+.upload-status.err{color:var(--red);}
+
+/* STATS */
+.stats{display:flex;gap:10px;flex-wrap:wrap;padding:16px 32px;border-bottom:1px solid var(--border);}
+.pill{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 16px;display:flex;flex-direction:column;gap:2px;}
+.pill .v{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;line-height:1;letter-spacing:0.04em;}
+.pill .l{font-size:0.59rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+.pill.gold .v{color:var(--gold);}.pill.win .v{color:var(--win);}.pill.loss .v{color:var(--red);}.pill.blue .v{color:var(--blue);}
+
+/* FILTERS */
+.filters{padding:12px 32px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20;
+  background:rgba(11,26,18,0.95);backdrop-filter:blur(14px);}
+.flbl{font-size:0.59rem;text-transform:uppercase;letter-spacing:0.11em;color:var(--muted);white-space:nowrap;}
+.fg{display:flex;align-items:center;gap:5px;}
+.divider{width:1px;height:24px;background:var(--border);margin:0 4px;}
+.btn{background:var(--card2);border:1px solid var(--border);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:0.74rem;padding:5px 10px;border-radius:5px;
+  cursor:pointer;transition:all 0.13s;white-space:nowrap;}
+.btn.active{background:var(--green);border-color:var(--green-mid);color:#fff;font-weight:600;}
+.btn:hover:not(.active){border-color:var(--green-mid);}
+select{background:var(--card2);border:1px solid var(--border);color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:0.74rem;padding:5px 24px 5px 8px;
+  border-radius:5px;cursor:pointer;appearance:none;outline:none;transition:border-color 0.13s;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5'%3E%3Cpath d='M0 0l4.5 5 4.5-5z' fill='%236b9e7e'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 7px center;}
+select:hover,select:focus{border-color:var(--green-mid);}
+select[id="dateSel"]{min-width:130px;}
+.breset{background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--muted);
+  font-family:'DM Sans',sans-serif;font-size:0.67rem;padding:5px 11px;border-radius:5px;
+  cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.13s;margin-left:auto;}
+.breset:hover{border-color:var(--muted);color:var(--text);}
+
+/* SOURCE */
+.srcbar{padding:7px 32px;display:flex;align-items:center;gap:8px;font-size:0.66rem;color:var(--muted);border-bottom:1px solid var(--border);}
+.srcbar a{color:var(--muted);text-decoration:underline;text-underline-offset:2px;}
+.srcbar a:hover{color:var(--text);}
+
+/* TABLE */
+.twrap-outer{padding:20px 32px 48px;}
+.rcount{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;}
+.rcount span{color:var(--gold);font-weight:600;}
+.twrap{border-radius:10px;border:1px solid var(--border);overflow:hidden;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:0.835rem;}
+thead tr{background:var(--mid);}
+thead th{padding:11px 13px;text-align:left;font-size:0.59rem;font-weight:600;letter-spacing:0.13em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;transition:color 0.12s;}
+thead th:hover{color:var(--text);}
+thead th .ar{opacity:0.22;margin-left:3px;font-size:0.64rem;}
+thead th.sorted .ar{opacity:1;color:var(--gold);}
+tbody tr{border-bottom:1px solid var(--border);transition:background 0.1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,0.03);}
+tbody tr.hrow{background:rgba(26,107,60,0.09);}
+tbody tr.hrow:hover{background:rgba(26,107,60,0.15);}
+tbody tr.future-row{background:rgba(82,149,224,0.04);}
+td{padding:11px 13px;vertical-align:middle;white-space:nowrap;}
+td.dcol{font-family:'Bebas Neue',sans-serif;font-size:0.92rem;letter-spacing:0.06em;color:var(--muted);}
+td.divcol{font-size:0.78rem;font-weight:700;color:var(--gold);letter-spacing:0.03em;}
+.tn{display:flex;align-items:center;gap:6px;}
+.badge{display:inline-block;background:var(--green);color:#fff;font-size:0.56rem;font-weight:700;
+  letter-spacing:0.07em;text-transform:uppercase;padding:2px 5px;border-radius:3px;flex-shrink:0;}
+td.sccol{text-align:center;min-width:90px;}
+.sc{display:inline-flex;align-items:center;gap:3px;background:var(--card2);border:1px solid var(--border);
+  border-radius:6px;padding:3px 8px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;}
+.sc .sep{color:var(--muted);font-size:0.74rem;}
+.sc.win{border-color:rgba(93,214,138,0.4);background:rgba(93,214,138,0.07);}
+.sc.loss{border-color:rgba(224,82,82,0.35);background:rgba(224,82,82,0.06);}
+.sc.draw{border-color:rgba(240,180,41,0.3);background:rgba(240,180,41,0.05);}
+.stbadge{display:inline-block;font-size:0.67rem;font-weight:600;letter-spacing:0.05em;
+  padding:3px 9px;border-radius:4px;text-transform:uppercase;white-space:nowrap;}
+.stbadge.np{background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);}
+.stbadge.future{background:rgba(82,149,224,0.12);color:var(--blue);border:1px solid rgba(82,149,224,0.25);}
+td.rcol{font-size:0.76rem;color:var(--muted);font-style:italic;}
+td.lcol{font-size:0.76rem;color:var(--muted);}
+.habadge{display:inline-block;font-size:0.58rem;font-weight:700;letter-spacing:0.08em;padding:2px 6px;border-radius:3px;text-transform:uppercase;}
+.habadge.home{background:rgba(26,107,60,0.35);color:#5dd68a;border:1px solid rgba(93,214,138,0.3);}
+.habadge.away{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid var(--border);}
+.tbadge{display:inline-block;font-size:0.57rem;font-weight:700;letter-spacing:0.07em;padding:2px 6px;border-radius:3px;text-transform:uppercase;}
+.tbadge.cup{background:rgba(240,180,41,0.18);color:var(--gold);border:1px solid rgba(240,180,41,0.3);}
+.tbadge.league{background:rgba(82,149,224,0.12);color:var(--blue);border:1px solid rgba(82,149,224,0.25);}
+.tbadge.friendly{background:rgba(107,158,126,0.15);color:var(--muted);border:1px solid rgba(107,158,126,0.25);}
+.dash{color:rgba(107,158,126,0.28);font-size:0.7rem;}
+.empty{text-align:center;padding:44px 20px;color:var(--muted);font-size:0.87rem;letter-spacing:0.06em;}
+@media(max-width:640px){.header,.stats,.filters,.twrap-outer,.srcbar{padding-left:14px;padding-right:14px;}}
+</style>
+</head>
+<body>
+
+<!-- CONFIRM CLEAR MODAL -->
+<div class="modal-overlay" id="clearOverlay" onclick="if(event.target===this)closeClearModal()">
+  <div class="modal">
+    <h3>Clear All Data?</h3>
+    <p>This will remove all <strong id="clearCount">0</strong> fixtures from the dashboard. The page will be left empty ready for a fresh upload.<br><br>This cannot be undone — make sure you have your source data saved before proceeding.</p>
+    <div class="modal-actions" style="margin-top:24px;">
+      <button class="modal-cancel" onclick="closeClearModal()">Cancel</button>
+      <button style="background:var(--red);border:1px solid #c04040;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:600;padding:7px 18px;border-radius:5px;cursor:pointer;" onclick="confirmClear()">Yes, Clear All</button>
+    </div>
+  </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <h3>Upload Fixture Data</h3>
+    <p>Upload a <code>.csv</code> or <code>.tsv</code> file with columns:<br>
+    <code>Date · Division · Home Team · H · A · Away Team · Referee · Location · Tournament</code><br><br>
+    New records will be merged with existing data. Existing records with the same Date + Division will be updated.</p>
+    <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()"
+      ondragover="dzDrag(event,true)" ondragleave="dzDrag(event,false)" ondrop="dzDrop(event)">
+      <div class="dz-icon">📂</div>
+      <div class="dz-lbl">Drop file here or <span>browse</span></div>
+    </div>
+    <input type="file" id="fileInput" accept=".csv,.tsv,.txt" onchange="handleFile(this.files[0])">
+    <div class="upload-status" id="uploadStatus"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-confirm" id="confirmBtn" onclick="applyUpload()">Apply & Refresh</button>
+    </div>
+  </div>
+</div>
+
+<div class="header">
+  <div>
+    <div class="club-title">Belmont <span>FC</span></div>
+    <div class="sub"><span class="dot"></span>Season 2025 / 26 &nbsp;·&nbsp; Fixtures &amp; Results</div>
+  </div>
+  <div class="hdr-r">
+    <div class="hdr-updated">
+      <div class="dlbl">Updated</div>
+      <div class="dval" id="updatedDate">05 Apr 2026</div>
+    </div>
+    <button class="clear-btn" onclick="openClearModal()">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M2 4h12M6 4V2h4v2M5 4l1 10h4l1-10"/>
+      </svg>
+      Clear Data
+    </button>
+    <button class="upload-btn" onclick="openModal()">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 11V3M4 6l4-4 4 4"/><path d="M2 13h12"/>
+      </svg>
+      Upload Data
+    </button>
+  </div>
+</div>
+
+<div class="stats" id="statsRow"></div>
+
+<div class="filters">
+  <div class="fg">
+    <span class="flbl">H / A</span>
+    <button class="btn active" data-ha="all" onclick="setF('ha','all',this)">All</button>
+    <button class="btn" data-ha="home" onclick="setF('ha','home',this)">Home</button>
+    <button class="btn" data-ha="away" onclick="setF('ha','away',this)">Away</button>
+  </div>
+  <div class="divider"></div>
+  <div class="fg">
+    <span class="flbl">Result</span>
+    <button class="btn active" data-st="all" onclick="setF('st','all',this)">All</button>
+    <button class="btn" data-st="played" onclick="setF('st','played',this)">Played</button>
+    <button class="btn" data-st="future" onclick="setF('st','future',this)">Upcoming</button>
+    <button class="btn" data-st="np" onclick="setF('st','np',this)">Not Played</button>
+  </div>
+  <div class="divider"></div>
+  <div class="fg">
+    <span class="flbl">Type</span>
+    <button class="btn active" data-tp="all" onclick="setF('tp','all',this)">All</button>
+    <button class="btn" data-tp="League" onclick="setF('tp','League',this)">League</button>
+    <button class="btn" data-tp="Cup" onclick="setF('tp','Cup',this)">Cup</button>
+  </div>
+  <div class="divider"></div>
+  <div class="fg">
+    <span class="flbl">Age Group</span>
+    <select id="ageSel" onchange="applyFilters()"><option value="">All Ages</option></select>
+  </div>
+  <div class="fg">
+    <span class="flbl">Division</span>
+    <select id="divSel" onchange="applyFilters()"><option value="">All</option></select>
+  </div>
+  <div class="fg">
+    <span class="flbl">Opponent</span>
+    <select id="oppSel" onchange="applyFilters()"><option value="">All</option></select>
+  </div>
+  <div class="fg">
+    <span class="flbl">Referee</span>
+    <select id="refSel" onchange="applyFilters()"><option value="">All</option></select>
+  </div>
+  <div class="fg">
+    <span class="flbl">Date</span>
+    <select id="dateSel" onchange="applyFilters()"><option value="">All Dates</option></select>
+  </div>
+  <button class="breset" onclick="resetAll()">↺ Reset</button>
+</div>
+
+<div class="srcbar">
+  📡 <a href="https://ddsl.ie/clubprofile/84871/" target="_blank">ddsl.ie – Belmont FC</a> &nbsp;·&nbsp; Season 2025/26
+</div>
+
+<div class="twrap-outer">
+  <div class="rcount" id="rcount"></div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th onclick="sortBy('date_sort')" id="th-date">Date <span class="ar">↕</span></th>
+        <th onclick="sortBy('division')" id="th-div">Division <span class="ar">↕</span></th>
+        <th>H/A</th>
+        <th onclick="sortBy('tournament')" id="th-tp">Type <span class="ar">↕</span></th>
+        <th onclick="sortBy('home')" id="th-home">Home Team <span class="ar">↕</span></th>
+        <th>Result</th>
+        <th onclick="sortBy('away')" id="th-away">Away Team <span class="ar">↕</span></th>
+        <th onclick="sortBy('referee')" id="th-ref">Referee <span class="ar">↕</span></th>
+        <th onclick="sortBy('location')" id="th-loc">Location <span class="ar">↕</span></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const SEED_DATA=
+[
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"13.7 Boys Sat","home":"Verona FC","h_goals":2,"a_goals":3,"away":"Belmont FC","referee":"Kyle Smith","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Verona FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"13.1/2 Cup","home":"Clontarf FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"Paul Mc Guirk","location":"","tournament":"Cup","has_score":false,"is_home":false,"opponent":"Clontarf FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"13.6/7/8 Cup","home":"Granada FC","h_goals":3,"a_goals":2,"away":"Belmont FC","referee":"Jamie Keating","location":"","tournament":"Cup","has_score":true,"is_home":false,"opponent":"Granada FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"12.3/4 Cup","home":"Greystones United AFC","h_goals":2,"a_goals":7,"away":"Belmont FC","referee":"Cían Coughlan","location":"","tournament":"Cup","has_score":true,"is_home":false,"opponent":"Greystones United AFC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"12.5/6 Cup","home":"Transport Iveagh Trust FC","h_goals":1,"a_goals":0,"away":"Belmont FC","referee":"Paul Curtis","location":"","tournament":"Cup","has_score":true,"is_home":false,"opponent":"Transport Iveagh Trust FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"12.8 Boys Sat","home":"Dalkey United FC","h_goals":0,"a_goals":6,"away":"Belmont FC","referee":"Flann Brien","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Dalkey United FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"11.6 Boys Sat","home":"Hartstown / Huntstown FC","h_goals":1,"a_goals":4,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Hartstown / Huntstown FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"11.7 Boys Sat","home":"Dunboyne FC","h_goals":1,"a_goals":3,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Dunboyne FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"11.9 Boys Sat","home":"Firhouse Carmel FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Firhouse Carmel FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"10.4 Boys Sat","home":"Terenure Rangers FC","h_goals":4,"a_goals":2,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Terenure Rangers FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"10.6 Boys Sat","home":"Belmont FC","h_goals":5,"a_goals":5,"away":"Rosemount Mulvey FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Rosemount Mulvey FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"10.9 Boys Sat","home":"Belmont FC","h_goals":5,"a_goals":0,"away":"Leixlip United AFC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Leixlip United AFC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"9.9 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Sacred Heart FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"Sacred Heart FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"8.8 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Inchicore Athletic FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"Inchicore Athletic FC"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"8.6 Friendly","home":"Finglas Utd","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"Friendly","has_score":false,"is_home":false,"opponent":"Finglas Utd"},
+  {"date":"14-Mar-2026","date_sort":"20260314","division_raw":"9.5 Boys Sat","home":"Maynooth","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Maynooth"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"13.2 Boys Sat","home":"Belmont FC","h_goals":0,"a_goals":2,"away":"St Mochtas FC","referee":"James Merriman","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"St Mochtas FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"13.8 Boys Sat","home":"Dunboyne FC","h_goals":7,"a_goals":6,"away":"Belmont FC","referee":"Calum Gray","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Dunboyne FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"12.3 Boys Sat","home":"Sporting Greystones FC","h_goals":1,"a_goals":1,"away":"Belmont FC","referee":"Ruben Kenny","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Sporting Greystones FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"12.6 Boys Sat","home":"Wayside Celtic FC","h_goals":0,"a_goals":1,"away":"Belmont FC","referee":"Oscar Caballero","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Wayside Celtic FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"12.8 Boys Sat","home":"Belmont FC","h_goals":1,"a_goals":0,"away":"Verona FC","referee":"James Merriman","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Verona FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"11.6/7 Cup","home":"Home Farm FC","h_goals":2,"a_goals":5,"away":"Belmont FC","referee":"","location":"","tournament":"Cup","has_score":true,"is_home":false,"opponent":"Home Farm FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"11.7 Boys Sat","home":"Belmont FC","h_goals":8,"a_goals":2,"away":"Leicester Celtic FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Leicester Celtic FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"11.9 Boys Sat","home":"Belmont FC","h_goals":4,"a_goals":2,"away":"Cabinteely FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Cabinteely FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"10.4 Boys Sat","home":"St Joseph's AFC","h_goals":0,"a_goals":0,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"St Joseph's AFC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"10.6 Boys Sat","home":"Belmont FC","h_goals":3,"a_goals":3,"away":"Greystones United AFC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Greystones United AFC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"10.9 Boys Sat","home":"Hartstown / Huntstown FC","h_goals":3,"a_goals":7,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Hartstown / Huntstown FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"9.5 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Esker Celtic FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"Esker Celtic FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"9.9 Boys Sat","home":"Enniskerry FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Enniskerry FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"8.6 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Terenure Rangers FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"Terenure Rangers FC"},
+  {"date":"21-Mar-2026","date_sort":"20260321","division_raw":"8.8 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Leixlip United AFC","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"Leixlip United AFC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"13.2 Boys Sat","home":"Dalkey United FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"Fatih Haracci","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Dalkey United FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"13.7 Boys Sat","home":"Belmont FC","h_goals":0,"a_goals":1,"away":"Ballyoulster United FC","referee":"James Merriman","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Ballyoulster United FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"13.8 Boys Sat","home":"Belmont FC","h_goals":1,"a_goals":3,"away":"Tallaght Town AFC","referee":"James Merriman","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Tallaght Town AFC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"12.8 Boys Sat","home":"Belmont FC","h_goals":2,"a_goals":3,"away":"Kilnamanagh AFC","referee":"Flann Brien","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Kilnamanagh AFC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"12.3/4 Cup","home":"Belmont FC","h_goals":0,"a_goals":1,"away":"Leixlip United AFC","referee":"Flann Brien","location":"","tournament":"Cup","has_score":true,"is_home":true,"opponent":"Leixlip United AFC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"11.6 Boys Sat","home":"Ballyoulster United FC","h_goals":0,"a_goals":1,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Ballyoulster United FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"11.7 Boys Sat","home":"St Pauls Artane FC","h_goals":1,"a_goals":8,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"St Pauls Artane FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"11.9 Boys Sat","home":"Glebe North FC","h_goals":4,"a_goals":2,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":false,"opponent":"Glebe North FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"10.4 Boys Sat","home":"Belmont FC","h_goals":3,"a_goals":2,"away":"Sacred Heart FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Sacred Heart FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"10.6 Boys Sat","home":"Belmont FC","h_goals":12,"a_goals":9,"away":"Ardmore Rovers FC","referee":"","location":"","tournament":"League","has_score":true,"is_home":true,"opponent":"Ardmore Rovers FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"10.9 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"AFC Belgrave","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"AFC Belgrave"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"9.5 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Firhouse Carmel FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":true,"opponent":"Firhouse Carmel FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"9.9 Boys Sat","home":"Sporting Greystones FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Sporting Greystones FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"8.6 Boys Sat","home":"Sporting Greystones FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Sporting Greystones FC"},
+  {"date":"28-Mar-2026","date_sort":"20260328","division_raw":"8.8 Boys Sat","home":"Marks Celtic FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"","tournament":"League","has_score":false,"is_home":false,"opponent":"Marks Celtic FC"},
+  {"date":"29-Mar-2026","date_sort":"20260329","division_raw":"17.3 Boys Sun","home":"Drumcondra AFC","h_goals":3,"a_goals":4,"away":"Belmont FC","referee":"Stephen Baker","location":"Clonturk Park","tournament":"League","has_score":true,"is_home":false,"opponent":"Drumcondra AFC"},
+  {"date":"29-Mar-2026","date_sort":"20260329","division_raw":"17.7 Boys Sun","home":"Belmont FC","h_goals":2,"a_goals":2,"away":"Granada FC","referee":"Kai Li","location":"Herbert Park","tournament":"League","has_score":true,"is_home":true,"opponent":"Granada FC"},
+  {"date":"29-Mar-2026","date_sort":"20260329","division_raw":"16.5 Boys Sun","home":"Wayside Celtic FC","h_goals":2,"a_goals":6,"away":"Belmont FC","referee":"Robert Mooney","location":"Jackson Park","tournament":"League","has_score":true,"is_home":false,"opponent":"Wayside Celtic FC"},
+  {"date":"29-Mar-2026","date_sort":"20260329","division_raw":"15.4 Boys Sun","home":"Parkvale FC","h_goals":1,"a_goals":1,"away":"Belmont FC","referee":"Tyson Wall","location":"Rockbrook Park School","tournament":"League","has_score":true,"is_home":false,"opponent":"Parkvale FC"},
+  {"date":"29-Mar-2026","date_sort":"20260329","division_raw":"14.6 Boys Sun","home":"Belmont FC","h_goals":0,"a_goals":2,"away":"St Mochtas FC","referee":"Kai Li","location":"Herbert Park","tournament":"League","has_score":true,"is_home":true,"opponent":"St Mochtas FC"},
+  {"date":"29-Mar-2026","date_sort":"20260329","division_raw":"12 Girls Tony Keyes Cup","home":"Belmont FC","h_goals":3,"a_goals":4,"away":"Knocklyon United FC","referee":"Kai Li","location":"Herbert Park","tournament":"Cup","has_score":true,"is_home":true,"opponent":"Knocklyon United FC"},
+  {"date":"07-Apr-2026","date_sort":"20260407","division_raw":"14.6 Boys Sun","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Esker Celtic FC","referee":"Amie Zuniga Byrne","location":"Herbert Park","tournament":"League","has_score":false,"is_home":true,"opponent":"Esker Celtic FC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"10.4 Boys Sat","home":"Celbridge Town AFC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"St Pats Park","tournament":"League","has_score":false,"is_home":false,"opponent":"Celbridge Town AFC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"10.6 Boys Sat","home":"Templeogue United FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"Templeogue United","tournament":"League","has_score":false,"is_home":false,"opponent":"Templeogue United FC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"10.9 Boys Sat","home":"Beech Park FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"Herbert Park","tournament":"League","has_score":false,"is_home":false,"opponent":"Beech Park FC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"9.5 Boys Sat","home":"Castleknock Celtic FC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"Porterstown Park","tournament":"League","has_score":false,"is_home":false,"opponent":"Castleknock Celtic FC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"9.9 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Granada FC","referee":"","location":"Herbert Park","tournament":"League","has_score":false,"is_home":true,"opponent":"Granada FC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"8.6 Boys Sat","home":"Belmont FC","h_goals":null,"a_goals":null,"away":"Firhouse Carmel FC","referee":"","location":"Herbert Park","tournament":"League","has_score":false,"is_home":true,"opponent":"Firhouse Carmel FC"},
+  {"date":"11-Apr-2026","date_sort":"20260411","division_raw":"8.8 Boys Sat","home":"Greystones United AFC","h_goals":null,"a_goals":null,"away":"Belmont FC","referee":"","location":"Woodlands","tournament":"League","has_score":false,"is_home":false,"opponent":"Greystones United AFC"}
+]
+;
+
+const TODAY_SORT = '20260405';
+
+function divShort(raw){const m=String(raw).match(/^(\d+(?:\.\d+(?:\/\d+)*)?)/);return m?m[1]:raw;}
+function ageGroup(raw){const m=String(raw).match(/^(\d+)/);return m?'U'+m[1]:'?';}
+
+function parseDate(str){
+  // Accept formats: "14-Mar-2026", "14-Mar", "2026-03-14", "14/03/2026"
+  if(!str)return '';
+  str=String(str).trim();
+  const months={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+  let m;
+  // dd-Mon-yyyy or dd-Mon
+  m=str.match(/^(\d{1,2})[-\/\s]([A-Za-z]{3})[-\/\s]?(\d{4})?$/);
+  if(m){const yr=m[3]||'2026';const mo=months[m[2].toLowerCase()]||'01';return yr+(mo).padStart(2,'0')+(m[1]).padStart(2,'0');}
+  // yyyy-mm-dd
+  m=str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(m)return m[1]+m[2]+m[3];
+  // dd/mm/yyyy
+  m=str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m)return m[3]+(m[2]).padStart(2,'0')+(m[1]).padStart(2,'0');
+  return '';
+}
+
+function formatDate(dateSort){
+  if(!dateSort||dateSort.length<8)return '';
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const y=dateSort.slice(0,4),mo=parseInt(dateSort.slice(4,6))-1,d=parseInt(dateSort.slice(6,8));
+  return d+'-'+months[mo]+'-'+y;
+}
+
+function enrich(g){
+  const ds = g.date_sort || parseDate(g.date||'');
+  const hs = g.has_score || (g.h_goals!==null && g.h_goals!=='' && g.h_goals!==undefined && g.a_goals!==null && g.a_goals!=='' && g.a_goals!==undefined);
+  let status;
+  if(hs) status='played';
+  else if(ds>TODAY_SORT) status='future';
+  else status='np';
+  return{
+    ...g,
+    date_sort: ds,
+    date_display: g.date || formatDate(ds),
+    division: divShort(g.division_raw||g.division||''),
+    age_group: ageGroup(g.division_raw||g.division||''),
+    has_score: hs,
+    status,
+    is_home: g.is_home,
+    opponent: g.opponent || (g.is_home ? g.away : g.home),
+    tournament: g.tournament||'League'
+  };
+}
+
+let ALL = SEED_DATA.map(enrich);
+let filters={ha:'all',st:'all',tp:'all'};
+let sortCol='date_sort',sortAsc=true;
+let pendingData=null;
+
+/* ── DROPDOWNS ── */
+function buildDropdowns(){
+  const ages=[...new Set(ALL.map(g=>g.age_group))].sort((a,b)=>parseInt(a.replace('U',''))-parseInt(b.replace('U','')));
+  const divs=[...new Set(ALL.map(g=>g.division))].sort((a,b)=>parseFloat(a)-parseFloat(b));
+  const opps=[...new Set(ALL.map(g=>g.opponent))].sort();
+  const refs=[...new Set(ALL.filter(g=>g.referee&&g.referee!=='-').map(g=>g.referee))].sort();
+  const dates=[...new Set(ALL.map(g=>g.date_display))].filter(Boolean)
+    .sort((a,b)=>{const da=parseDate(a),db=parseDate(b);return da<db?-1:da>db?1:0;});
+
+  function fill(id,arr,label){
+    const sel=document.getElementById(id);
+    const cur=sel.value;
+    sel.innerHTML=`<option value="">${label}</option>`;
+    arr.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
+    if(arr.includes(cur))sel.value=cur;
+  }
+  fill('ageSel',ages,'All Ages');
+  fill('divSel',divs,'All');
+  fill('oppSel',opps,'All');
+  fill('refSel',refs,'All');
+  fill('dateSel',dates,'All Dates');
+}
+
+/* ── STATS ── */
+function renderStats(g){
+  const pl=g.filter(x=>x.status==='played');
+  const fut=g.filter(x=>x.status==='future');
+  const np=g.filter(x=>x.status==='np');
+  let w=0,d=0,l=0,gf=0,ga=0;
+  pl.forEach(x=>{
+    const bs=x.is_home?x.h_goals:x.a_goals,os=x.is_home?x.a_goals:x.h_goals;
+    gf+=Number(bs);ga+=Number(os);
+    if(Number(bs)>Number(os))w++;else if(Number(bs)===Number(os))d++;else l++;
+  });
+  document.getElementById('statsRow').innerHTML=`
+    <div class="pill gold"><div class="v">${g.length}</div><div class="l">Total</div></div>
+    <div class="pill win"><div class="v">${pl.length}</div><div class="l">Played</div></div>
+    <div class="pill blue"><div class="v">${fut.length}</div><div class="l">Upcoming</div></div>
+    <div class="pill"><div class="v">${np.length}</div><div class="l">Not Played</div></div>
+    <div class="pill win"><div class="v">${w}</div><div class="l">Wins</div></div>
+    <div class="pill"><div class="v">${d}</div><div class="l">Draws</div></div>
+    <div class="pill loss"><div class="v">${l}</div><div class="l">Losses</div></div>
+    <div class="pill blue"><div class="v">${gf}–${ga}</div><div class="l">GF–GA</div></div>
+    <div class="pill"><div class="v">${g.filter(x=>x.is_home).length}</div><div class="l">Home</div></div>
+    <div class="pill"><div class="v">${g.filter(x=>!x.is_home).length}</div><div class="l">Away</div></div>`;
+}
+
+function setF(key,val){
+  filters[key]=val;
+  document.querySelectorAll(`[data-${key}]`).forEach(b=>b.classList.toggle('active',b.dataset[key]===val));
+  applyFilters();
+}
+
+function applyFilters(){
+  const div=document.getElementById('divSel').value;
+  const age=document.getElementById('ageSel').value;
+  const opp=document.getElementById('oppSel').value;
+  const ref=document.getElementById('refSel').value;
+  const date=document.getElementById('dateSel').value;
+
+  let f=ALL.filter(g=>{
+    if(filters.ha==='home'&&!g.is_home)return false;
+    if(filters.ha==='away'&&g.is_home)return false;
+    if(filters.st!=='all'&&g.status!==filters.st)return false;
+    if(filters.tp!=='all'&&g.tournament!==filters.tp)return false;
+    if(div&&g.division!==div)return false;
+    if(age&&g.age_group!==age)return false;
+    if(opp&&g.opponent!==opp)return false;
+    if(ref&&g.referee!==ref)return false;
+    if(date&&g.date_display!==date)return false;
+    return true;
+  });
+
+  f=[...f].sort((a,b)=>{
+    let va=a[sortCol]??'',vb=b[sortCol]??'';
+    if(typeof va==='string')va=va.toLowerCase();
+    if(typeof vb==='string')vb=vb.toLowerCase();
+    return sortAsc?(va<vb?-1:va>vb?1:0):(va<vb?1:va>vb?-1:0);
+  });
+
+  renderStats(f);
+  render(f);
+  const isFiltered=div||age||opp||ref||date||filters.ha!=='all'||filters.st!=='all'||filters.tp!=='all';
+  document.getElementById('rcount').innerHTML=isFiltered
+    ?`Filtered: <span>${f.length}</span> of ${ALL.length} fixtures`
+    :`<span>${ALL.length}</span> fixtures total`;
+}
+
+function sortBy(col){
+  sortAsc=sortCol===col?!sortAsc:true;sortCol=col;
+  document.querySelectorAll('thead th').forEach(t=>t.classList.remove('sorted'));
+  const m={date_sort:'th-date',division:'th-div',tournament:'th-tp',home:'th-home',away:'th-away',referee:'th-ref',location:'th-loc'};
+  if(m[col])document.getElementById(m[col]).classList.add('sorted');
+  applyFilters();
+}
+
+function resetAll(){
+  filters={ha:'all',st:'all',tp:'all'};
+  sortCol='date_sort';sortAsc=true;
+  ['ha','st','tp'].forEach(k=>document.querySelectorAll(`[data-${k}]`).forEach(b=>b.classList.toggle('active',b.dataset[k]==='all')));
+  ['divSel','ageSel','oppSel','refSel','dateSel'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('thead th').forEach(t=>t.classList.remove('sorted'));
+  document.getElementById('th-date').classList.add('sorted');
+  applyFilters();
+}
+
+/* ── RENDER ── */
+function resultHTML(g){
+  if(g.status==='future') return '<span class="stbadge future">Upcoming</span>';
+  if(g.status==='np') return '<span class="stbadge np">Not Played</span>';
+  const bs=g.is_home?g.h_goals:g.a_goals,os=g.is_home?g.a_goals:g.h_goals;
+  const cls=Number(bs)>Number(os)?'win':Number(bs)<Number(os)?'loss':'draw';
+  return `<div class="sc ${cls}"><span>${g.h_goals}</span><span class="sep">–</span><span>${g.a_goals}</span></div>`;
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function render(games){
+  const tb=document.getElementById('tbody');
+  if(!games.length){tb.innerHTML='<tr><td colspan="9" class="empty">No fixtures match the selected filters</td></tr>';return;}
+  tb.innerHTML=games.map(g=>{
+    const bh=g.is_home;
+    const hT=bh?`<div class="tn"><span class="badge">BFC</span>${esc(g.home)}</div>`:esc(g.home);
+    const aT=!bh?`<div class="tn"><span class="badge">BFC</span>${esc(g.away)}</div>`:esc(g.away);
+    const hab=bh?'<span class="habadge home">H</span>':'<span class="habadge away">A</span>';
+    const tt=g.tournament==='Cup'?'cup':g.tournament==='Friendly'?'friendly':'league';
+    const ttL=g.tournament==='Cup'?'Cup':g.tournament==='Friendly'?'Fr':'Lge';
+    const rowCls=g.status==='future'?'future-row':bh?'hrow':'';
+    const ref=g.referee&&g.referee!=='-'?esc(g.referee):'<span class="dash">–</span>';
+    const loc=g.location?esc(g.location):'<span class="dash">–</span>';
+    return `<tr class="${rowCls}">
+      <td class="dcol">${g.date_display||g.date||''}</td>
+      <td class="divcol">${esc(g.division)}</td>
+      <td>${hab}</td>
+      <td><span class="tbadge ${tt}">${ttL}</span></td>
+      <td>${hT}</td>
+      <td class="sccol">${resultHTML(g)}</td>
+      <td>${aT}</td>
+      <td class="rcol">${ref}</td>
+      <td class="lcol">${loc}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── UPLOAD ── */
+function openModal(){document.getElementById('modalOverlay').classList.add('open');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');pendingData=null;document.getElementById('uploadStatus').textContent='';document.getElementById('uploadStatus').className='upload-status';document.getElementById('confirmBtn').style.display='none';}
+function closeModalOutside(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function dzDrag(e,on){e.preventDefault();document.getElementById('dropZone').classList.toggle('drag-over',on);}
+function dzDrop(e){e.preventDefault();dzDrag(e,false);const f=e.dataTransfer.files[0];if(f)handleFile(f);}
+
+function handleFile(file){
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>parseUpload(e.target.result,file.name);
+  reader.readAsText(file);
+}
+
+function parseUpload(text,filename){
+  const status=document.getElementById('uploadStatus');
+  const confirmBtn=document.getElementById('confirmBtn');
+  try{
+    const lines=text.trim().split(/\r?\n/).filter(l=>l.trim());
+    const sep=lines[0].includes('\t')?'\t':',';
+    const headers=lines[0].split(sep).map(h=>h.trim().toLowerCase().replace(/[^a-z0-9]/g,''));
+    
+    // Map header indices
+    const idx={};
+    const hmap={date:['date'],division:['division','div'],home:['hometeam','home'],
+      h:['h','hgoals','hg'],a:['a','agoals','ag'],away:['awayteam','away'],
+      referee:['referee','ref'],location:['location','loc','venue'],tournament:['tournament','type','cup']};
+    headers.forEach((h,i)=>{
+      for(const[key,aliases]of Object.entries(hmap)){
+        if(aliases.includes(h)&&idx[key]===undefined)idx[key]=i;
+      }
+    });
+
+    if(idx.date===undefined||idx.home===undefined||idx.away===undefined){
+      throw new Error('Could not find required columns (Date, Home Team, Away Team)');
+    }
+
+    const rows=lines.slice(1);
+    const parsed=[];
+    rows.forEach(line=>{
+      const cells=line.split(sep).map(c=>c.trim().replace(/^"|"$/g,''));
+      const dateRaw=cells[idx.date]||'';
+      const ds=parseDate(dateRaw);
+      if(!ds)return;
+      const hg=idx.h!==undefined?cells[idx.h]:null;
+      const ag=idx.a!==undefined?cells[idx.a]:null;
+      const hasScore=hg!==null&&hg!==''&&ag!==null&&ag!=='';
+      const homeTeam=cells[idx.home]||'';
+      const awayTeam=cells[idx.away]||'';
+      const isBelmontHome=/belmont/i.test(homeTeam);
+      const divRaw=idx.division!==undefined?cells[idx.division]:'';
+      parsed.push({
+        date:dateRaw, date_sort:ds,
+        division_raw:divRaw,
+        home:homeTeam, away:awayTeam,
+        h_goals:hasScore?Number(hg):null,
+        a_goals:hasScore?Number(ag):null,
+        has_score:hasScore,
+        is_home:isBelmontHome,
+        opponent:isBelmontHome?awayTeam:homeTeam,
+        referee:idx.referee!==undefined?cells[idx.referee]:'',
+        location:idx.location!==undefined?cells[idx.location]:'',
+        tournament:idx.tournament!==undefined?(cells[idx.tournament]||'League'):'League'
+      });
+    });
+
+    if(!parsed.length)throw new Error('No valid rows found');
+    pendingData=parsed;
+    status.textContent=`✓ Parsed ${parsed.length} records from "${filename}"`;
+    status.className='upload-status ok';
+    confirmBtn.style.display='inline-block';
+  }catch(err){
+    status.textContent='✗ '+err.message;
+    status.className='upload-status err';
+    confirmBtn.style.display='none';
+  }
+}
+
+function applyUpload(){
+  if(!pendingData)return;
+  // Merge: key = date_sort + division_raw (normalised)
+  const key=g=>(g.date_sort||'')+'|'+(g.division_raw||g.division||'').toLowerCase().replace(/\s+/g,'');
+  const map=new Map(ALL.map(g=>[key(g),g]));
+  pendingData.map(enrich).forEach(g=>map.set(key(g),g));
+  ALL=[...map.values()].sort((a,b)=>a.date_sort<b.date_sort?-1:1);
+  
+  // Update header date
+  const now=new Date();
+  document.getElementById('updatedDate').textContent=now.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][now.getMonth()]+' '+now.getFullYear();
+  
+  buildDropdowns();
+  resetAll();
+  closeModal();
+}
+
+/* ── CLEAR ALL ── */
+function openClearModal(){
+  document.getElementById('clearCount').textContent=ALL.length;
+  document.getElementById('clearOverlay').classList.add('open');
+}
+function closeClearModal(){
+  document.getElementById('clearOverlay').classList.remove('open');
+}
+function confirmClear(){
+  ALL=[];
+  buildDropdowns();
+  resetAll();
+  document.getElementById('updatedDate').textContent='–';
+  closeClearModal();
+}
+
+/* ── INIT ── */
+function init(){
+  buildDropdowns();
+  document.getElementById('th-date').classList.add('sorted');
+  applyFilters();
+}
+init();
+</script>
+</body>
+</html>
