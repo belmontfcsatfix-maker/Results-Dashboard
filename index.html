@@ -244,7 +244,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
   </div>
   <div class="hdr-r">
     <div class="lbl">Last Updated</div>
-    <div class="val">15 Apr 2026</div>
+    <div class="val" id="lastUpdated">—</div>
   </div>
 </div>
 
@@ -422,6 +422,16 @@ const ALL = DATA.map(g => {
   return { ...g, division: getDiv(g.division_raw), age: getAge(g.division_raw),
     is_home: bh, result_type, tournament: g.tournament || 'League' };
 });
+
+// ── Last Updated: derive from latest game date in data ──
+(function() {
+  const played = ALL.filter(g => g.result_type === 'win' || g.result_type === 'draw' || g.result_type === 'loss');
+  if (played.length) {
+    const latest = played.reduce((best, g) => ((g.date_sort || '') > (best.date_sort || '') ? g : best), played[0]);
+    const el = document.getElementById('lastUpdated');
+    if (el) el.textContent = latest.date || latest.date_sort || '—';
+  }
+})();
 
 // Filters state
 // ha: single value ('all'/'home'/'away')
