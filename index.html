@@ -376,7 +376,7 @@ function showError(msg) {
   document.body.innerHTML = `<div style="padding:40px;font-family:sans-serif;color:#e74c3c;background:#050d1a;min-height:100vh">
     <h2 style="color:#fdb813;margin-bottom:12px">⚠ Could not load data</h2>
     <p style="color:#f0f4f8;margin-bottom:8px">${msg}</p>
-    <p style="color:#8ba2c1;font-size:0.85rem">Make sure at least one of <strong>gamesdata1.csv</strong> or <strong>gamesdata2.csv</strong> is in the same folder as this HTML file and that you are serving it from a web server (not opening it as a local file).</p>
+    <p style="color:#8ba2c1;font-size:0.85rem">Make sure your Google Sheet is shared as <strong>"Anyone with the link"</strong> and that the Sheet ID and gid values are correct.</p>
   </div>`;
 }
 
@@ -395,10 +395,13 @@ async function tryFetch(url) {
 }
 
 async function loadData() {
-  const v = '?v=' + Date.now();
+  const sheetId = '1Dej_HbjnZZb3Zrb86ExJ6Mg4XCb0PrT5_5BQOfyRJbM';
+  const url1 = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+  const url2 = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=827954`;
+
   const [rows1, rows2] = await Promise.all([
-    tryFetch('gamesdata1.csv' + v),
-    tryFetch('gamesdata2.csv' + v)
+    tryFetch(url1),
+    tryFetch(url2)
   ]);
 
   if (!rows1 && !rows2) {
@@ -409,8 +412,8 @@ async function loadData() {
   // Show which files loaded
   const el = document.getElementById('filesLoaded');
   if (el) {
-    const loaded = [rows1 ? 'gamesdata1' : null, rows2 ? 'gamesdata2' : null].filter(Boolean);
-    const missing = [!rows1 ? 'gamesdata1' : null, !rows2 ? 'gamesdata2' : null].filter(Boolean);
+    const loaded = [rows1 ? 'Sheet 1 (gid:0)' : null, rows2 ? 'Sheet 2 (gid:827954)' : null].filter(Boolean);
+    const missing = [!rows1 ? 'Sheet 1 (gid:0)' : null, !rows2 ? 'Sheet 2 (gid:827954)' : null].filter(Boolean);
     let html = loaded.map(f => `<span style="color:var(--green)">${f} ✓</span>`).join('&nbsp; ');
     if (missing.length) html += '&nbsp; ' + missing.map(f => `<span style="color:var(--red);opacity:0.6">${f} ✗</span>`).join('&nbsp; ');
     el.innerHTML = html;
