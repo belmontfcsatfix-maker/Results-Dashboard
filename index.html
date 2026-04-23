@@ -319,7 +319,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
           <th onclick="sortBy('group')">Group ↕</th>
           <th onclick="sortBy('division')">Division ↕</th>
           <th>Type</th>
-          <th onclick="sortBy('home')" style="width:10%">Home ↕</th>
+          <th onclick="sortBy('home')">Home ↕</th>
           <th style="text-align:center">Result</th>
           <th onclick="sortBy('away')" style="width:10%">Away ↕</th>
           <th onclick="sortBy('referee')">Referee ↕</th>
@@ -405,7 +405,8 @@ async function loadData() {
   ]);
 
   if (!rows1 && !rows2) {
-    showError('Neither gamesdata1.csv nor gamesdata2.csv could be loaded.');
+    DATA = [];
+    initDashboard();
     return;
   }
 
@@ -654,6 +655,22 @@ function renderStats(filtered) {
       `<div class="np-reason"><span class="dot" style="background:${reasonColour(r)}"></span><span class="cnt">${cnt}</span> ${r}</div>`
     ).join('');
 
+  const scoredGames = ALL.filter(g => {
+    if (filters.ha === 'home' && !g.is_home) return false;
+    if (filters.ha === 'away' && g.is_home)  return false;
+    if (filters.tp !== 'all' && g.tournament !== filters.tp) return false;
+    if (filters.age !== 'all' && g.age !== filters.age) return false;
+    if (filters.div !== 'all' && g.division !== filters.div) return false;
+    if (filters.date !== 'all' && g.date !== filters.date) return false;
+    if (filters.rival !== 'all') { const opp = g.is_home ? g.away : g.home; if (opp !== filters.rival) return false; }
+    if (filters.group !== 'all' && g.group !== filters.group) return false;
+    if (!filters.st.has(g.result_type)) return false;
+    if (g.h_goals === null) return false;
+    return g.result_type === 'win' || g.result_type === 'draw' || g.result_type === 'loss';
+  });
+  const gf = scoredGames.reduce((s,g) => s + (g.is_home ? g.h_goals : g.a_goals), 0);
+  const ga = scoredGames.reduce((s,g) => s + (g.is_home ? g.a_goals : g.h_goals), 0);
+
   // Active state: pill is highlighted if its result_type is in the filter AND not all selected
   const isAllSt = filters.st.size === ALL_ST.length;
   const act = v => (!isAllSt && filters.st.has(v)) ? 'active-pill' : '';
@@ -661,7 +678,12 @@ function renderStats(filtered) {
 
   document.getElementById('statsRow').innerHTML = `
     <button class="pill ${isAllSt?'':'' }" onclick="selectOnlySt(null)">
-      <div class="v">${total}</div><div class="l">Total</div>
+      <div class="v">${total}</div>
+      <div class="l">Total</div>
+      <div style="display:flex;gap:8px;margin-top:6px;color:var(--muted);font-size:0.7rem;white-space:nowrap">
+        <span><span style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:0.9rem">${gf}</span> GF</span>
+        <span><span style="color:var(--red);font-family:'Bebas Neue',sans-serif;font-size:0.9rem">${ga}</span> GA</span>
+      </div>
     </button>
     <button class="pill ${act('win')}" onclick="selectOnlySt('win')">
       <div class="v" style="color:var(--green)">${w}</div><div class="l">Wins</div>
