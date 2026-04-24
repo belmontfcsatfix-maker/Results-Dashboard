@@ -319,7 +319,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
           <th onclick="sortBy('group')">Group ↕</th>
           <th onclick="sortBy('division')">Division ↕</th>
           <th>Type</th>
-          <th onclick="sortBy('home')">Home ↕</th>
+          <th onclick="sortBy('home')" style="width:10%">Home ↕</th>
           <th style="text-align:center">Result</th>
           <th onclick="sortBy('away')" style="width:10%">Away ↕</th>
           <th onclick="sortBy('referee')">Referee ↕</th>
@@ -337,6 +337,7 @@ function setDropdown(key, val)       { if(window._setDropdown) window._setDropdo
 function sortBy(col)                 { if(window._sortBy) window._sortBy(col); }
 function resetAll()                  { if(window._resetAll) window._resetAll(); }
 function selectOnlySt(val)           { if(window._selectOnlySt) window._selectOnlySt(val); }
+function selectResultsOnly()         { if(window._selectResultsOnly) window._selectResultsOnly(); }
 function switchTab(tab, btn)         { if(window._switchTab) window._switchTab(tab, btn); }
 function insFilterChange(key, val)   { if(window._insFilterChange) window._insFilterChange(key, val); }
 function resetInsights()             { if(window._resetInsights) window._resetInsights(); }
@@ -688,27 +689,31 @@ function renderStats(filtered) {
   const totalAct = isAllSt ? '' : 'active-pill'; // total pill active when filtering
 
   document.getElementById('statsRow').innerHTML = `
-    <button class="pill ${isAllSt?'':'' }" onclick="selectOnlySt(null)">
+    <button class="pill ${isAllSt?'':'' }" onclick="selectOnlySt(null)" style="flex:0 1 126px;min-width:0;">
       <div class="v">${total}</div>
       <div class="l">Total</div>
-      <div style="display:flex;gap:8px;margin-top:6px;color:var(--muted);font-size:0.7rem;white-space:nowrap">
-        <span><span style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:0.9rem">${gf}</span> GF</span>
-        <span><span style="color:var(--red);font-family:'Bebas Neue',sans-serif;font-size:0.9rem">${ga}</span> GA</span>
+      <div style="display:flex;gap:6px;margin-top:6px;color:var(--muted);font-size:0.65rem;white-space:nowrap">
+        <span><span style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:0.85rem">${gf}</span> GF</span>
+        <span><span style="color:var(--red);font-family:'Bebas Neue',sans-serif;font-size:0.85rem">${ga}</span> GA</span>
       </div>
     </button>
-    <button class="pill ${act('win')}" onclick="selectOnlySt('win')">
+    <button class="pill ${filters.st.size===3&&filters.st.has('win')&&filters.st.has('draw')&&filters.st.has('loss')?'active-pill':''}" onclick="selectResultsOnly()" style="flex:0 1 126px;min-width:0;">
+      <div class="v" style="color:var(--yellow)">${played.length}</div>
+      <div class="l">With Results</div>
+    </button>
+    <button class="pill ${act('win')}" onclick="selectOnlySt('win')" style="flex:0 1 112px;min-width:0;">
       <div class="v" style="color:var(--green)">${w}</div><div class="l">Wins</div>
     </button>
-    <button class="pill ${act('draw')}" onclick="selectOnlySt('draw')">
+    <button class="pill ${act('draw')}" onclick="selectOnlySt('draw')" style="flex:0 1 112px;min-width:0;">
       <div class="v">${d}</div><div class="l">Draws</div>
     </button>
-    <button class="pill ${act('loss')}" onclick="selectOnlySt('loss')">
+    <button class="pill ${act('loss')}" onclick="selectOnlySt('loss')" style="flex:0 1 112px;min-width:0;">
       <div class="v" style="color:var(--red)">${l}</div><div class="l">Losses</div>
     </button>
-    <button class="pill ${act('nr')}" onclick="selectOnlySt('nr')">
+    <button class="pill ${act('nr')}" onclick="selectOnlySt('nr')" style="flex:0 1 140px;min-width:0;">
       <div class="v" style="color:var(--amber)">${nr}</div><div class="l">Not Reported</div>
     </button>
-    <button class="pill-np ${act('np')}" onclick="selectOnlySt('np')">
+    <button class="pill-np ${act('np')}" onclick="selectOnlySt('np')" style="flex:0 1 auto;min-width:0;">
       <div class="main">
         <div class="v" style="color:var(--muted)">${np}</div>
         <div class="l">Not Played</div>
@@ -719,6 +724,16 @@ function renderStats(filtered) {
 
 // Clicking a stat pill toggles that result type on/off (multi-select)
 // Clicking Total resets to all. Clicking an already-solo selection resets to all.
+function selectResultsOnly() {
+  const resultTypes = new Set(['win','draw','loss']);
+  const alreadyResultsOnly = filters.st.size === 3 && filters.st.has('win') && filters.st.has('draw') && filters.st.has('loss');
+  if (alreadyResultsOnly) {
+    filters.st = new Set(ALL_ST);
+  } else {
+    filters.st = resultTypes;
+  }
+  applyFilters();
+}
 function selectOnlySt(val) {
   if (val === null) {
     // Total clicked — reset to all
@@ -787,14 +802,15 @@ function resetAll() {
 }
 
 // Register all event-handler functions as global so onclick="" attributes work
-window._toggleBtn       = toggleBtn;
-window._setDropdown     = setDropdown;
-window._sortBy          = sortBy;
-window._resetAll        = resetAll;
-window._selectOnlySt    = selectOnlySt;
-window._switchTab       = switchTab;
-window._insFilterChange = insFilterChange;
-window._resetInsights   = resetInsights;
+window._toggleBtn          = toggleBtn;
+window._setDropdown        = setDropdown;
+window._sortBy             = sortBy;
+window._resetAll           = resetAll;
+window._selectOnlySt       = selectOnlySt;
+window._selectResultsOnly  = selectResultsOnly;
+window._switchTab          = switchTab;
+window._insFilterChange    = insFilterChange;
+window._resetInsights      = resetInsights;
 
 // Initial render
 applyFilters();
@@ -1134,7 +1150,6 @@ function buildCard(title, sub, headers, rows, headerAligns) {
   </div>`;
 }
 
-
 }
 </script>
 
@@ -1164,5 +1179,6 @@ function buildCard(title, sub, headers, rows, headerAligns) {
     <div class="stats-grid" id="insightsGrid"></div>
   </div>
 </div>
+
 </body>
 </html>
