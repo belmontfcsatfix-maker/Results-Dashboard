@@ -353,10 +353,13 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-bottom:2px;">
         <span style="font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);">Division Status:</span>
         <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#8ba2c1;">
-          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(46,204,113,0.35);border:1px solid rgba(46,204,113,0.6);flex-shrink:0;"></span>Confirmed
+          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(46,204,113,0.32);border:1px solid rgba(46,204,113,0.65);flex-shrink:0;"></span>Confirmed
         </span>
         <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#8ba2c1;">
-          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(230,126,34,0.35);border:1px solid rgba(230,126,34,0.6);flex-shrink:0;"></span>Pending
+          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(243,156,18,0.28);border:1px solid rgba(243,156,18,0.6);flex-shrink:0;"></span>Pending
+        </span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#8ba2c1;">
+          <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(231,76,60,0.32);border:1px solid rgba(231,76,60,0.65);flex-shrink:0;"></span>Declined
         </span>
       </div>
     </div>
@@ -747,9 +750,14 @@ function renderMatchDay() {
 
   /* ── helpers ── */
   function confIcon(val) {
-    return val && val.toUpperCase() === 'Y'
-      ? `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#27ae60;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`
-      : `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e67e22;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 2.5L6.5 6.5M6.5 2.5L2.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></span>`;
+    const v = (val || '').toUpperCase();
+    if (v === 'Y') {
+      return `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#27ae60;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+    } else if (v === 'N') {
+      return `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e74c3c;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 2.5L6.5 6.5M6.5 2.5L2.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></span>`;
+    } else {
+      return `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e67e22;flex-shrink:0;vertical-align:middle;"></span>`;
+    }
   }
   function highlightBFC(name) {
     return /belmont fc/i.test(name)
@@ -851,8 +859,9 @@ function renderMatchDay() {
       const rowBg = isAlt ? 'rgba(253,184,19,0.04)' : '';
       const dc = mdDivColor(g.div);
       const bothConf = g.hConf && g.hConf.toUpperCase() === 'Y' && g.aConf && g.aConf.toUpperCase() === 'Y';
-      const cBg  = bothConf ? 'rgba(46,204,113,0.18)' : 'rgba(230,126,34,0.18)';
-      const cBrd = bothConf ? 'rgba(46,204,113,0.35)' : 'rgba(230,126,34,0.35)';
+      const hasDecl = g.hConf.toUpperCase() === 'N' || g.aConf.toUpperCase() === 'N';
+      const cBg  = hasDecl ? 'rgba(231,76,60,0.32)' : bothConf ? 'rgba(46,204,113,0.32)' : 'rgba(243,156,18,0.28)';
+      const cBrd = hasDecl ? 'rgba(231,76,60,0.65)' : bothConf ? 'rgba(46,204,113,0.65)' : 'rgba(243,156,18,0.6)';
       return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''};"
         onmouseover="this.style.background='rgba(255,255,255,0.06)'"
         onmouseout="this.style.background='${rowBg}'">
@@ -880,8 +889,9 @@ function renderMatchDay() {
       const rowBg = isAlt ? 'rgba(253,184,19,0.04)' : '';
       const dc = mdDivColor(g.div);
       const bothConfirmed = g.hConf && g.hConf.toUpperCase() === 'Y' && g.aConf && g.aConf.toUpperCase() === 'Y';
-      const confCellBg = bothConfirmed ? 'rgba(46,204,113,0.18)' : 'rgba(230,126,34,0.18)';
-      const confCellBorder = bothConfirmed ? 'rgba(46,204,113,0.35)' : 'rgba(230,126,34,0.35)';
+      const hasDeclined = g.hConf.toUpperCase() === 'N' || g.aConf.toUpperCase() === 'N';
+      const confCellBg = hasDeclined ? 'rgba(231,76,60,0.32)' : bothConfirmed ? 'rgba(46,204,113,0.32)' : 'rgba(243,156,18,0.28)';
+      const confCellBorder = hasDeclined ? 'rgba(231,76,60,0.65)' : bothConfirmed ? 'rgba(46,204,113,0.65)' : 'rgba(243,156,18,0.6)';
       const tr = document.createElement('tr');
       tr.style.cssText = `border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''}`;
       tr.onmouseover = () => tr.style.background = 'rgba(255,255,255,0.06)';
@@ -1180,9 +1190,14 @@ window._renderMatchDayFiltered = function() {
 
   // Helpers
   function confIcon(val) {
-    return val && val.toUpperCase() === 'Y'
-      ? `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#27ae60;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`
-      : `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e67e22;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 2.5L6.5 6.5M6.5 2.5L2.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></span>`;
+    const v = (val || '').toUpperCase();
+    if (v === 'Y') {
+      return `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#27ae60;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+    } else if (v === 'N') {
+      return `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e74c3c;flex-shrink:0;vertical-align:middle;"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 2.5L6.5 6.5M6.5 2.5L2.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></span>`;
+    } else {
+      return `<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e67e22;flex-shrink:0;vertical-align:middle;"></span>`;
+    }
   }
   function highlightBFC(name) {
     return /belmont fc/i.test(name)
