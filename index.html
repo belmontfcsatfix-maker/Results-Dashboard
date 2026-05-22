@@ -565,6 +565,9 @@ function mdPrintFixtures(mode) {
         el.style.width     = 'max-content';
         el.style.maxWidth  = 'none';
       }
+      // Boost font sizes for print readability
+      const fs = parseFloat(cs.fontSize);
+      if (!isNaN(fs) && fs > 0) el.style.fontSize = (fs * 1.5) + 'px';
     });
 
     document.body.appendChild(clone);
@@ -578,7 +581,7 @@ function mdPrintFixtures(mode) {
       const fullHeight = clone.scrollHeight;
 
       html2canvas(clone, {
-        backgroundColor: '#0a1628', scale: 2, useCORS: true, allowTaint: true,
+        backgroundColor: '#0a1628', scale: 4, useCORS: true, allowTaint: true,
         logging: false, scrollX: 0, scrollY: 0, x: 0, y: 0,
         width: fullWidth, height: fullHeight,
         windowWidth: fullWidth, windowHeight: fullHeight,
@@ -1958,6 +1961,9 @@ function resultsPrint() {
         el.style.height    = 'auto';
         el.style.maxHeight = 'none';
       }
+      // Boost font sizes for print readability
+      const fs = parseFloat(cs.fontSize);
+      if (!isNaN(fs) && fs > 0) el.style.fontSize = (fs * 1.5) + 'px';
     });
 
     // Add a header banner to the clone
@@ -1973,7 +1979,7 @@ function resultsPrint() {
       const W = clone.scrollWidth;
       const H = clone.scrollHeight;
       html2canvas(clone, {
-        backgroundColor: '#0a1628', scale: 2, useCORS: true, allowTaint: true,
+        backgroundColor: '#0a1628', scale: 4, useCORS: true, allowTaint: true,
         logging: false, scrollX: 0, scrollY: 0, x: 0, y: 0,
         width: W, height: H, windowWidth: W, windowHeight: H,
       }).then(canvas => {
