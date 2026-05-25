@@ -1503,8 +1503,8 @@ async function loadData() {
   // Show which files loaded
   const el = document.getElementById('filesLoaded');
   if (el) {
-    const s1 = rows1 ? `<span style="color:var(--green)">Sheet 1 ✓</span>` : `<span style="color:var(--red);opacity:0.6">Sheet 1 ✗</span>`;
-    const s2 = rows2 ? `<span style="color:var(--green)">Sheet 2 ✓</span>` : `<span style="color:var(--red);opacity:0.6">Sheet 2 ✗</span>`;
+    const s1 = rows1 ? `<span style="color:var(--green)">Load 2 - Sat ✓</span>` : `<span style="color:var(--red);opacity:0.6">Load 2 - Sat ✗</span>`;
+    const s2 = rows2 ? `<span style="color:var(--green)">Load 3 - Sun ✓</span>` : `<span style="color:var(--red);opacity:0.6">Load 3 - Sun ✗</span>`;
     el.innerHTML = `${s1} &nbsp; ${s2}`;
   }
 
