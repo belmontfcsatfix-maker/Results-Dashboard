@@ -7,19 +7,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --blue:   #0a1d37;
-  --blue2:  #162f52;
+  --blue:   #2b2f36;
+  --blue2:  #eceef1;
   --yellow: #fdb813;
-  --dark:   #050d1a;
-  --card:   #0c1f3d;
-  --text:   #f0f4f8;
-  --muted:  #8ba2c1;
-  --border: rgba(253,184,19,0.15);
+  --dark:   #f4f5f7;
+  --card:   #ffffff;
+  --text:   #1c1f24;
+  --muted:  #6b7280;
+  --border: rgba(0,0,0,0.1);
   --green:  #2ecc71;
   --red:    #e74c3c;
-  --amber:  #f39c12;
-  --fbox:   rgba(255,255,255,0.03);
-  --fbox-b: rgba(255,255,255,0.08);
+  --amber:  #0f2347;
+  --fbox:   rgba(0,0,0,0.03);
+  --fbox-b: rgba(0,0,0,0.08);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--dark); font-family:'DM Sans',sans-serif; color:var(--text);
@@ -29,10 +29,10 @@ body { background:var(--dark); font-family:'DM Sans',sans-serif; color:var(--tex
 .header { padding:28px 20px 20px; border-bottom:2px solid var(--yellow); display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:12px; }
 .club-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,6vw,4rem); letter-spacing:0.02em; line-height:0.9; }
 .club-title span { color:var(--yellow); }
-.sub { font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--yellow); margin-top:8px; font-weight:600; }
+.sub { font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:#8b650a; margin-top:8px; font-weight:600; }
 .hdr-r { text-align:right; }
 .hdr-r .lbl { font-size:0.6rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
-.hdr-r .val { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.06em; color:var(--yellow); }
+.hdr-r .val { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.06em; color:#8b650a; }
 
 /* STATS */
 .stats { display:flex; gap:12px; flex-wrap:wrap; padding:20px; background:rgba(0,0,0,0.2); align-items:stretch; }
@@ -60,7 +60,7 @@ body { background:var(--dark); font-family:'DM Sans',sans-serif; color:var(--tex
   padding:14px 20px;
   border-bottom:1px solid var(--border);
   position:sticky; top:0; z-index:20;
-  background:rgba(5,13,26,0.97); backdrop-filter:blur(12px);
+  background:rgba(244,245,247,0.97); backdrop-filter:blur(12px);
 }
 .filters-grid {
   display:grid;
@@ -92,14 +92,14 @@ body { background:var(--dark); font-family:'DM Sans',sans-serif; color:var(--tex
   font-weight:700;
   text-transform:uppercase;
   letter-spacing:0.13em;
-  color:var(--yellow);
+  color:#0f2347;
   opacity:0.85;
 }
 .fbox-body { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
 
 /* Buttons */
 .btn {
-  background:var(--blue2); border:1px solid rgba(255,255,255,0.1); color:var(--muted);
+  background:var(--blue2); border:1px solid rgba(0,0,0,0.1); color:var(--muted);
   font-family:'DM Sans',sans-serif; font-size:0.74rem; padding:5px 10px;
   border-radius:6px; cursor:pointer; white-space:nowrap; transition:all 0.15s;
   user-select:none;
@@ -110,20 +110,20 @@ body { background:var(--dark); font-family:'DM Sans',sans-serif; color:var(--tex
 
 /* Selects */
 select {
-  background:var(--blue2); border:1px solid rgba(255,255,255,0.1); color:var(--muted);
+  background:var(--blue2); border:1px solid rgba(0,0,0,0.1); color:var(--muted);
   font-family:'DM Sans',sans-serif; font-size:0.74rem; padding:5px 22px 5px 8px;
   border-radius:6px; outline:none; appearance:none; cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' fill='%238ba2c1'%3E%3Cpath d='M0 3l4.5 4.5L9 3z'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' fill='%236b7280'%3E%3Cpath d='M0 3l4.5 4.5L9 3z'/%3E%3C/svg%3E");
   background-repeat:no-repeat; background-position:right 7px center;
   transition:border-color 0.15s, color 0.15s;
 }
 select:hover, select:focus { border-color:var(--yellow); color:var(--text); }
-select option:disabled { color:rgba(139,162,193,0.35); }
+select option:disabled { color:rgba(107,114,128,0.35); }
 
 /* Multiselect dropdown (e.g. Match Day date filter) */
 .msdrop { position:relative; display:inline-block; }
 .msdrop-trigger {
-  background:var(--blue2); border:1px solid rgba(255,255,255,0.1); color:var(--muted);
+  background:var(--blue2); border:1px solid rgba(0,0,0,0.1); color:var(--muted);
   font-family:'DM Sans',sans-serif; font-size:0.74rem; padding:5px 10px;
   border-radius:6px; cursor:pointer; white-space:nowrap; transition:all 0.15s;
   display:inline-flex; align-items:center; gap:7px; user-select:none;
@@ -139,7 +139,7 @@ select option:disabled { color:rgba(139,162,193,0.35); }
   box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 .msdrop.open .msdrop-panel { display:block; }
-.msdrop-actions { display:flex; gap:6px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.msdrop-actions { display:flex; gap:6px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid rgba(0,0,0,0.08); }
 .msdrop-action {
   background:transparent; border:1px solid rgba(253,184,19,0.3); color:var(--yellow);
   font-family:'DM Sans',sans-serif; font-size:0.64rem; font-weight:700; padding:4px 8px;
@@ -151,7 +151,7 @@ select option:disabled { color:rgba(139,162,193,0.35); }
   display:flex; align-items:center; gap:8px; padding:5px 6px; border-radius:5px;
   font-size:0.76rem; color:var(--text); cursor:pointer; transition:background 0.12s; white-space:nowrap;
 }
-.msdrop-option:hover { background:rgba(255,255,255,0.06); }
+.msdrop-option:hover { background:rgba(0,0,0,0.06); }
 .msdrop-option input[type="checkbox"] { accent-color:var(--yellow); width:13px; height:13px; cursor:pointer; flex-shrink:0; }
 
 /* Reset box */
@@ -181,20 +181,20 @@ select option:disabled { color:rgba(139,162,193,0.35); }
 /* TABLE */
 .twrap-outer { padding:20px 20px 48px; }
 .rcount { font-size:0.7rem; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
-.rcount span { color:var(--yellow); font-weight:700; }
+.rcount span { color:#0f2347; font-weight:700; }
 .twrap { border-radius:12px; border:1px solid var(--border); overflow-x:auto; background:var(--card); }
 table { width:100%; border-collapse:collapse; font-size:0.85rem; min-width:800px; }
 thead tr { background:var(--blue2); }
 thead th { padding:13px 15px; text-align:left; font-size:0.6rem; font-weight:700;
-  text-transform:uppercase; color:var(--yellow); border-bottom:1px solid var(--border);
+  text-transform:uppercase; color:#0f2347; border-bottom:1px solid var(--border);
   cursor:pointer; white-space:nowrap; user-select:none; }
-thead th:hover { color:#fff; }
-tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.1s; }
-tbody tr:hover { background:rgba(255,255,255,0.03); }
+thead th:hover { color:var(--text); }
+tbody tr { border-bottom:1px solid rgba(0,0,0,0.04); transition:background 0.1s; }
+tbody tr:hover { background:rgba(0,0,0,0.03); }
 td { padding:12px 15px; vertical-align:middle; white-space:nowrap; }
 td.dcol { font-family:'Bebas Neue',sans-serif; font-size:1rem; color:var(--muted); }
-td.divcol { font-weight:700; color:var(--yellow); font-size:0.82rem; }
-.bfc { color:var(--yellow); font-weight:700; }
+td.divcol { font-weight:700; color:#0f2347; font-size:0.82rem; }
+.bfc { color:#3f72c9; font-weight:700; }
 .sc { display:inline-flex; align-items:center; gap:4px; border:1px solid var(--yellow);
   border-radius:6px; padding:3px 9px; font-family:'Bebas Neue',sans-serif; font-size:1.1rem;
   color:var(--yellow); background:var(--blue); }
@@ -202,15 +202,15 @@ td.divcol { font-weight:700; color:var(--yellow); font-size:0.82rem; }
 .sc.loss { background:var(--red);   color:#fff; border-color:var(--red); }
 .sc.draw { background:rgba(253,184,19,0.15); }
 .badge { font-size:0.62rem; font-weight:700; padding:3px 8px; border-radius:4px; text-transform:uppercase; white-space:nowrap; }
-.badge-np     { background:rgba(255,255,255,0.05);  color:var(--muted); border:1px solid rgba(255,255,255,0.12); }
+.badge-np     { background:rgba(0,0,0,0.05);  color:var(--muted); border:1px solid rgba(0,0,0,0.12); }
 .badge-nr     { background:rgba(243,156,18,0.15);   color:var(--amber); border:1px solid rgba(243,156,18,0.3); }
-.badge-cup    { background:rgba(253,184,19,0.13);   color:var(--yellow); border:1px solid rgba(253,184,19,0.3); }
-.badge-league { background:rgba(255,255,255,0.05);  color:var(--muted); border:1px solid rgba(255,255,255,0.1); }
+.badge-cup    { background:rgba(253,184,19,0.13);   color:#0f2347; border:1px solid rgba(253,184,19,0.3); }
+.badge-league { background:rgba(0,0,0,0.05);  color:var(--muted); border:1px solid rgba(0,0,0,0.1); }
 .badge-other  { background:rgba(116,185,255,0.1);   color:#74b9ff;      border:1px solid rgba(116,185,255,0.3); }
 .reason-tag   { font-size:0.62rem; padding:2px 7px; border-radius:3px; font-weight:600; }
 .reason-weather    { background:rgba(52,152,219,0.2);  color:#74b9ff; }
 .reason-opposition { background:rgba(231,76,60,0.2);   color:#ff7675; }
-.reason-belmont    { background:rgba(253,184,19,0.2);   color:var(--yellow); }
+.reason-belmont    { background:rgba(253,184,19,0.2);   color:#0f2347; }
 td.refcol { font-size:0.78rem; color:var(--muted); font-style:italic; }
 td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hidden; text-overflow:ellipsis; }
 
@@ -236,11 +236,11 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 .tab-btn {
   font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.04em;
   text-transform:uppercase; padding:13px 8px; cursor:pointer; background:transparent; border:none;
-  color:var(--muted); border-bottom:3px solid transparent; margin-bottom:-1px; transition:all 0.18s;
+  color:#0f2347; border-bottom:3px solid transparent; margin-bottom:-1px; transition:all 0.18s;
   flex:1 1 0; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center;
 }
 .tab-btn:hover { color:var(--text); }
-.tab-btn.active { color:var(--yellow); border-bottom-color:var(--yellow); }
+.tab-btn.active { color:#8b650a; border-bottom-color:#8b650a; }
 .tab-panel { display:none; }
 .tab-panel.active { display:block; }
 
@@ -248,20 +248,20 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 .stats-page { padding:24px 20px 48px; }
 .stats-filters { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:24px;
   padding:12px 16px; background:var(--fbox); border:1px solid var(--fbox-b); border-radius:10px; }
-.stats-filters .flbl { font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.13em; color:var(--yellow); opacity:0.85; }
+.stats-filters .flbl { font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.13em; color:#0f2347; opacity:0.85; }
 .stats-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; }
 .stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
 .stat-card .stat-table-wrap { overflow-x:auto; overflow-y:auto; max-height:380px; }
 .stat-card-header { padding:14px 18px 10px; border-bottom:1px solid var(--border);
   display:flex; align-items:center; justify-content:space-between; }
-.stat-card-title { font-family:'Bebas Neue',sans-serif; font-size:1.05rem; letter-spacing:0.06em; color:var(--yellow); }
+.stat-card-title { font-family:'Bebas Neue',sans-serif; font-size:1.05rem; letter-spacing:0.06em; color:#0f2347; }
 .stat-card-sub { font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
 .stat-table { width:100%; border-collapse:collapse; font-size:0.78rem; }
 .stat-table th { padding:6px 8px; text-align:center; font-size:0.56rem; font-weight:700; text-transform:uppercase;
   letter-spacing:0.08em; color:var(--muted); border-bottom:1px solid var(--border); background:var(--blue2); white-space:nowrap; }
 .stat-table th.right { text-align:center; }
 .stat-table th.center { text-align:center; }
-.stat-table td { padding:7px 8px; border-bottom:1px solid rgba(255,255,255,0.03); vertical-align:middle; text-align:center; white-space:nowrap; }
+.stat-table td { padding:7px 8px; border-bottom:1px solid rgba(0,0,0,0.03); vertical-align:middle; text-align:center; white-space:nowrap; }
 .stat-table td.opp { text-align:left; white-space:nowrap; }
 .stat-table td.right { text-align:center; font-family:'Bebas Neue',sans-serif; font-size:0.92rem; color:var(--text); }
 /* Ranked cards (1–6): narrow rank col, left-align all other cols */
@@ -270,13 +270,13 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 .stat-card--ranked .stat-table th:not(:first-child) { text-align:left; }
 .stat-card--ranked .stat-table td:not(:first-child) { text-align:left; }
 .stat-table tr:last-child td { border-bottom:none; }
-.stat-table tr:hover td { background:rgba(255,255,255,0.02); }
+.stat-table tr:hover td { background:rgba(0,0,0,0.02); }
 .rank { font-family:'Bebas Neue',sans-serif; font-size:0.85rem; color:var(--muted); width:16px; }
 .rank.gold   { color:#FFD700; }
 .rank.silver { color:#C0C0C0; }
 .rank.bronze { color:#CD7F32; }
 .bar-wrap { display:flex; align-items:center; gap:4px; }
-.bar-bg { flex:1; height:4px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden; min-width:20px; max-width:44px; }
+.bar-bg { flex:1; height:4px; background:rgba(0,0,0,0.07); border-radius:3px; overflow:hidden; min-width:20px; max-width:44px; }
 .bar-fill { height:100%; border-radius:3px; background:var(--yellow); transition:width 0.4s ease; }
 .bar-fill.green { background:var(--green); }
 .bar-fill.red   { background:var(--red); }
@@ -284,9 +284,9 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
   font-size:1rem; padding:2px 8px; border-radius:5px; }
 .score-chip.win  { background:rgba(46,204,113,0.15); color:var(--green); border:1px solid rgba(46,204,113,0.3); }
 .score-chip.loss { background:rgba(231,76,60,0.15);  color:var(--red);   border:1px solid rgba(231,76,60,0.3); }
-.score-chip.draw { background:rgba(253,184,19,0.1);  color:var(--yellow);border:1px solid rgba(253,184,19,0.25); }
+.score-chip.draw { background:rgba(253,184,19,0.1);  color:#0f2347;border:1px solid rgba(253,184,19,0.25); }
 .team-name { font-size:0.76rem; color:var(--text); }
-.team-name.bfc-name { color:var(--yellow); font-weight:700; }
+.team-name.bfc-name { color:#3f72c9; font-weight:700; }
 .no-data { padding:24px; text-align:center; color:var(--muted); font-size:0.8rem; }
 @media(max-width:700px) { .stats-grid { grid-template-columns:1fr; } .tab-bar,.stats-page { padding-left:12px; padding-right:12px; } }
 @media(max-width:1100px) { .stats-grid { grid-template-columns:1fr; } }
@@ -294,7 +294,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 /* TEAMS ACTIVITY TAB */
 .act-section { margin-bottom:32px; }
 .act-header { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:14px; }
-.act-title { font-family:'Bebas Neue',sans-serif; font-size:1.15rem; letter-spacing:0.05em; color:var(--yellow); }
+.act-title { font-family:'Bebas Neue',sans-serif; font-size:1.15rem; letter-spacing:0.05em; color:#0f2347; }
 .act-sub { font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-top:3px; }
 .act-expand-btn {
   background:var(--blue2); border:1px solid rgba(253,184,19,0.4); color:var(--yellow);
@@ -305,18 +305,18 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 .act-expand-btn:hover { background:rgba(253,184,19,0.1); border-color:var(--yellow); }
 .act-expand-btn.expanded { background:rgba(253,184,19,0.15); }
 #activityTable thead th { padding:13px 15px; text-align:left; font-size:0.6rem; font-weight:700;
-  text-transform:uppercase; color:var(--yellow); border-bottom:1px solid var(--border);
+  text-transform:uppercase; color:#0f2347; border-bottom:1px solid var(--border);
   white-space:nowrap; user-select:none; background:var(--blue2); }
-#activityTable thead th[onclick]:hover { color:#fff; }
-#activityTable tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.1s; }
-#activityTable tbody tr:hover { background:rgba(255,255,255,0.03); }
+#activityTable thead th[onclick]:hover { color:var(--text); }
+#activityTable tbody tr { border-bottom:1px solid rgba(0,0,0,0.04); transition:background 0.1s; }
+#activityTable tbody tr:hover { background:rgba(0,0,0,0.03); }
 #activityTable td { padding:12px 15px; vertical-align:middle; white-space:nowrap; }
-.act-age-cell { font-family:'Bebas Neue',sans-serif; font-size:1.05rem; color:var(--yellow); }
+.act-age-cell { font-family:'Bebas Neue',sans-serif; font-size:1.05rem; color:#0f2347; }
 .act-div-cell { font-size:0.8rem; color:var(--muted); padding-left:28px !important; }
 .act-num { font-family:'Bebas Neue',sans-serif; font-size:1rem; text-align:center; }
 .act-group-row { background:rgba(253,184,19,0.04); }
 .act-group-row td { border-top:1px solid rgba(253,184,19,0.12); }
-.act-div-row td { border-bottom:1px solid rgba(255,255,255,0.03); }
+.act-div-row td { border-bottom:1px solid rgba(0,0,0,0.03); }
 </style>
 </head>
 <body>
@@ -349,7 +349,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 
 <!-- ── MATCH DAY TITLE ── -->
 <div style="padding:20px 20px 0;">
-  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.06em;color:var(--yellow);">Upcoming Fixtures</div>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.06em;color:#0f2347;">Upcoming Fixtures</div>
   <div id="md-subtitle" style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:3px;">Belmont FC Home &amp; Away</div>
 </div>
 
@@ -413,9 +413,9 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <button class="breset" style="font-size:0.68rem;padding:3px 6px;" onclick="mdResetAll()">↺ Reset</button>
         <button id="md-print-btn" onclick="mdPrintFixtures(window._mdPrintMode||'all')"
-          style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1a4a80,#0e2d55);border:1px solid rgba(253,184,19,0.35);color:var(--yellow);font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all 0.18s;"
-          onmouseover="this.style.borderColor='var(--yellow)';this.style.background='linear-gradient(135deg,#1f5a9e,#122f5a)'"
-          onmouseout="this.style.borderColor='rgba(253,184,19,0.35)';this.style.background='linear-gradient(135deg,#1a4a80,#0e2d55)'">
+          style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#3a3d42,#2b2e33);border:1px solid rgba(253,184,19,0.35);color:var(--yellow);font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all 0.18s;"
+          onmouseover="this.style.borderColor='var(--yellow)';this.style.background='linear-gradient(135deg,#4a4d54,#3a3d42)'"
+          onmouseout="this.style.borderColor='rgba(253,184,19,0.35)';this.style.background='linear-gradient(135deg,#3a3d42,#2b2e33)'">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4V1h8v3M2 8H1V4h10v4h-1M3 8v3h6V8" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
           Print Fixtures
         </button>
@@ -443,18 +443,18 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
   <div id="md-games-section">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
       <div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;color:var(--yellow);">Games</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;color:#0f2347;">Games</div>
         <div style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:3px;">Belmont FC All Games</div>
       </div>
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-bottom:2px;">
         <span style="font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);">Division Status:</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#8ba2c1;">
+        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#6b7280;">
           <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(46,204,113,0.45);border:1px solid rgba(46,204,113,0.75);flex-shrink:0;"></span>Confirmed
         </span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#8ba2c1;">
+        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#6b7280;">
           <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(243,156,18,0.4);border:1px solid rgba(243,156,18,0.7);flex-shrink:0;"></span>Pending
         </span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#8ba2c1;">
+        <span style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#6b7280;">
           <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(231,76,60,0.45);border:1px solid rgba(231,76,60,0.75);flex-shrink:0;"></span>Declined
         </span>
       </div>
@@ -463,14 +463,14 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
     <table id="md-games-table" style="width:100%;border-collapse:collapse;font-size:0.84rem;min-width:800px;">
       <thead>
         <tr style="background:var(--blue2);">
-          <th style="padding:13px 14px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Date</th>
-          <th style="padding:13px 14px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Division</th>
-          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Type</th>
-          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Home Team</th>
-          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Away Team</th>
-          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Kick Off</th>
-          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Referee</th>
-          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--yellow);border-bottom:1px solid var(--border);white-space:nowrap;">Comments</th>
+          <th style="padding:13px 14px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Date</th>
+          <th style="padding:13px 14px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Division</th>
+          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Type</th>
+          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Home Team</th>
+          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Away Team</th>
+          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Kick Off</th>
+          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Referee</th>
+          <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#0f2347;border-bottom:1px solid var(--border);white-space:nowrap;">Comments</th>
           <th style="padding:13px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#c49a0a;border-bottom:1px solid var(--border);white-space:nowrap;background:rgba(253,184,19,0.08);">Pitch</th>
         </tr>
       </thead>
@@ -482,7 +482,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 
   <!-- ── PITCHES SECTION ── -->
   <div id="md-pitches-section">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;color:var(--yellow);">Pitches</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;color:#0f2347;">Pitches</div>
     <div style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:3px;margin-bottom:10px;">Belmont FC Home Games</div>
     <!-- ── OVERLAP WARNING ── -->
     <div id="md-overlap-warning" style="display:none;margin-bottom:12px;padding:12px 16px;background:rgba(180,30,30,0.18);border:1px solid rgba(231,76,60,0.45);border-radius:10px;color:var(--text);"></div>
@@ -500,7 +500,7 @@ td.loccol { font-size:0.78rem; color:var(--muted); max-width:160px; overflow:hid
 ════════════════════════════════════════ */
 
 // Division colour palette (non-traffic-light)
-const MD_DIV_PALETTE = ['#7c6fcd','#e07b39','#5b9bd5','#4db8b8','#c76eb0','#6fad7c','#d4a843','#6fa8d4'];
+const MD_DIV_PALETTE = ['#594f93','#a15829','#416f99','#378484','#8f4f7e','#4f7c59','#987830','#4f7898'];
 function mdEsc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ── Weekday helper (shared by Match Day + Results tabs) ──
@@ -780,7 +780,7 @@ function mdPrintFixtures(mode) {
 
     // Build an off-screen clone so the live DOM (and tab state) is never touched
     const clone = target.cloneNode(true);
-    clone.style.cssText = `position:fixed;top:0;left:0;z-index:-9999;pointer-events:none;opacity:1;background:#0a1628;`;
+    clone.style.cssText = `position:fixed;top:0;left:0;z-index:-9999;pointer-events:none;opacity:1;background:#f4f5f7;`;
 
     // Remove unwanted sections from the clone
     if (mode === 'games') {
@@ -834,7 +834,7 @@ function mdPrintFixtures(mode) {
       const fullHeight = clone.scrollHeight;
 
       html2canvas(clone, {
-        backgroundColor: '#0a1628', scale: 4, useCORS: true, allowTaint: true,
+        backgroundColor: '#f4f5f7', scale: 4, useCORS: true, allowTaint: true,
         logging: false, scrollX: 0, scrollY: 0, x: 0, y: 0,
         width: fullWidth, height: fullHeight,
         windowWidth: fullWidth, windowHeight: fullHeight,
@@ -1113,15 +1113,15 @@ function renderMatchDay() {
   }
   function highlightBFC(name) {
     return /belmont fc/i.test(name)
-      ? `<span style="color:var(--yellow);font-weight:800;">${name}</span>`
-      : `<span style="color:#ffffff;">${name}</span>`;
+      ? `<span style="color:#3f72c9;font-weight:800;">${name}</span>`
+      : `<span style="color:var(--text);">${name}</span>`;
   }
   function teamCell(name, conf) {
     return `<td style="padding:10px 14px;text-align:center;font-weight:600;font-size:0.84rem;"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${highlightBFC(name)} ${confIcon(conf)}</span></td>`;
   }
   function refCell(name, conf) {
     if (!name) return `<td style="padding:10px 14px;text-align:center;font-size:0.78rem;"></td>`;
-    return `<td style="padding:10px 14px;text-align:center;font-size:0.78rem;color:#ffffff;"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${name} ${confIcon(conf)}</span></td>`;
+    return `<td style="padding:10px 14px;text-align:center;font-size:0.78rem;color:var(--text);"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${name} ${confIcon(conf)}</span></td>`;
   }
 
   function tpBadge(tournament) {
@@ -1193,7 +1193,7 @@ function renderMatchDay() {
     mdRenderDateOptions(testDates, true);
     mdRefreshAllBtnStyle();
 
-    const noticeRow = `<tr><td colspan="9" style="text-align:center;padding:8px 14px;background:rgba(253,184,19,0.07);border-bottom:1px solid rgba(253,184,19,0.15);font-size:0.68rem;color:var(--yellow);letter-spacing:0.06em;">
+    const noticeRow = `<tr><td colspan="9" style="text-align:center;padding:8px 14px;background:rgba(253,184,19,0.07);border-bottom:1px solid rgba(253,184,19,0.15);font-size:0.68rem;color:#0f2347;letter-spacing:0.06em;">
       ⚠ No fixture data loaded — showing 3 synthetic test games for preview only
     </td></tr>`;
 
@@ -1219,15 +1219,15 @@ function renderMatchDay() {
       const eitherDeclinedT = hcT === 'N' || acT === 'N';
       const cBg  = bothConf ? 'rgba(46,204,113,0.32)' : eitherDeclinedT ? 'rgba(231,76,60,0.32)' : 'rgba(243,156,18,0.28)';
       const cBrd = bothConf ? 'rgba(46,204,113,0.7)' : eitherDeclinedT ? 'rgba(231,76,60,0.7)' : 'rgba(243,156,18,0.65)';
-      return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''};"
-        onmouseover="this.style.background='rgba(255,255,255,0.06)'"
+      return `<tr style="border-bottom:1px solid rgba(0,0,0,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''};"
+        onmouseover="this.style.background='rgba(0,0,0,0.06)'"
         onmouseout="this.style.background='${rowBg}'">
         <td style="padding:10px 14px;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--muted);white-space:nowrap;">${g.dateFmt}${weekdayTag(g.dateKey)}</td>
         <td style="padding:10px 14px;white-space:nowrap;background:${cBg};border-left:3px solid ${cBrd};"><span style="font-size:0.72rem;font-weight:700;padding:3px 8px;border-radius:4px;background:${dc}22;color:${dc};border:1px solid ${dc}44;">${g.div}</span></td>
         <td style="padding:10px 14px;text-align:center;white-space:nowrap;">${tpBadge(g.tournament)}</td>
         ${teamCell(g.home, g.hConf)}
         ${teamCell(g.away, g.aConf)}
-        <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--yellow);">${g.ko}</td>
+        <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#0f2347;">${g.ko}</td>
         ${refCell(g.ref, g.refConf)}
         <td style="padding:10px 14px;text-align:center;font-size:0.75rem;color:var(--muted);font-style:italic;">${g.comments||'—'}</td>
         <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fdb813;background:rgba(253,184,19,0.07);">${g.pitch}</td>
@@ -1253,8 +1253,8 @@ function renderMatchDay() {
       const confCellBg = bothConfirmed ? 'rgba(46,204,113,0.32)' : eitherDeclined ? 'rgba(231,76,60,0.32)' : 'rgba(243,156,18,0.28)';
       const confCellBorder = bothConfirmed ? 'rgba(46,204,113,0.7)' : eitherDeclined ? 'rgba(231,76,60,0.7)' : 'rgba(243,156,18,0.65)';
       const tr = document.createElement('tr');
-      tr.style.cssText = `border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''}`;
-      tr.onmouseover = () => tr.style.background = 'rgba(255,255,255,0.06)';
+      tr.style.cssText = `border-bottom:1px solid rgba(0,0,0,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''}`;
+      tr.onmouseover = () => tr.style.background = 'rgba(0,0,0,0.06)';
       tr.onmouseout  = () => tr.style.background = rowBg;
       tr.innerHTML = `
         <td style="padding:10px 14px;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--muted);white-space:nowrap;">${g.dateFmt}${weekdayTag(g.dateSort)}</td>
@@ -1262,7 +1262,7 @@ function renderMatchDay() {
         <td style="padding:10px 14px;text-align:center;white-space:nowrap;">${tpBadge(g.tournament)}</td>
         ${teamCell(g.home, g.hConf)}
         ${teamCell(g.away, g.aConf)}
-        <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--yellow);">${g.ko}</td>
+        <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#0f2347;">${g.ko}</td>
         ${refCell(g.ref, g.refConf)}
         <td style="padding:10px 14px;text-align:center;font-size:0.75rem;color:var(--muted);font-style:italic;">${g.comments||'—'}</td>
         <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fdb813;background:rgba(253,184,19,0.07);">${g.pitch}</td>
@@ -1325,7 +1325,7 @@ window._renderMatchDayTables = function() {
     dateLabel.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px;margin-top:8px;';
     dateLabel.innerHTML = `
       <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.06em;color:var(--muted);">Date:</span>
-      <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.08em;color:var(--yellow);background:rgba(253,184,19,0.1);border:1px solid rgba(253,184,19,0.3);border-radius:6px;padding:3px 12px;">${dateFmt}${getWeekdayAbbr(dateEntry.key) ? ` <span style="font-family:'DM Sans',sans-serif;font-size:0.58rem;font-weight:400;letter-spacing:0.04em;color:var(--yellow);opacity:0.55;text-transform:uppercase;">${getWeekdayAbbr(dateEntry.key)}</span>` : ''}</span>`;
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.08em;color:#0f2347;background:rgba(253,184,19,0.1);border:1px solid rgba(253,184,19,0.3);border-radius:6px;padding:3px 12px;">${dateFmt}${getWeekdayAbbr(dateEntry.key) ? ` <span style="font-family:'DM Sans',sans-serif;font-size:0.58rem;font-weight:400;letter-spacing:0.04em;color:#0f2347;opacity:0.55;text-transform:uppercase;">${getWeekdayAbbr(dateEntry.key)}</span>` : ''}</span>`;
     container.appendChild(dateLabel);
 
     // Determine time range for this date
@@ -1414,10 +1414,10 @@ window._renderMatchDayTables = function() {
       const isShort = span <= 3;
       const dc = mdDivColor(game.div);
       const h = span * 28 - 8;
-      const blockBg     = isConflict ? 'linear-gradient(135deg,#5a0a0a 0%,#8b1a1a 100%)' : 'linear-gradient(135deg,var(--blue2) 0%,#1a4a80 100%)';
+      const blockBg     = isConflict ? 'linear-gradient(135deg,#5a0a0a 0%,#8b1a1a 100%)' : 'linear-gradient(135deg,var(--blue2) 0%,#d8dbe0 100%)';
       const blockBorder = isConflict ? 'rgba(231,76,60,0.7)' : 'rgba(253,184,19,0.25)';
       const shadow      = isConflict ? 'box-shadow:0 0 8px rgba(231,76,60,0.4);' : '';
-      const koColor     = isConflict ? '#ffaaaa' : 'var(--yellow)';
+      const koColor     = isConflict ? '#ffaaaa' : '#0f2347';
       const divColor    = isConflict ? '#ff8080' : dc;
       const widthStyle  = halfWidth ? 'width:50%;min-width:0;flex:1 1 0;' : 'width:100%;';
 
@@ -1430,7 +1430,7 @@ window._renderMatchDayTables = function() {
       const confLabel      = bothConfirmed ? 'Confirmed'  : eitherDeclined ? 'Cancelled'  : 'Pending';
       const confBg         = bothConfirmed ? 'rgba(46,204,113,0.22)'  : eitherDeclined ? 'rgba(231,76,60,0.22)'  : 'rgba(243,156,18,0.22)';
       const confBorder     = bothConfirmed ? 'rgba(46,204,113,0.55)'  : eitherDeclined ? 'rgba(231,76,60,0.55)'  : 'rgba(243,156,18,0.55)';
-      const confColor      = bothConfirmed ? '#2ecc71'                : eitherDeclined ? '#e74c3c'                : '#f39c12';
+      const confColor      = bothConfirmed ? '#2ecc71'                : eitherDeclined ? '#e74c3c'                : '#0f2347';
       const confDot        = bothConfirmed ? '●' : eitherDeclined ? '●' : '●';
       const statusBadge    = `<span style="display:inline-flex;align-items:center;gap:3px;font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:1px 5px;border-radius:3px;background:${confBg};border:1px solid ${confBorder};color:${confColor};line-height:1.5;white-space:nowrap;"><span style="font-size:0.45rem;">${confDot}</span>${confLabel}</span>`;
 
@@ -1441,12 +1441,12 @@ window._renderMatchDayTables = function() {
           ${statusBadge}
         </div>
         <div style="font-size:0.65rem;font-weight:700;color:${divColor};opacity:0.9;">${game.div}</div>
-        ${!isShort ? `<div style="font-size:0.72rem;font-weight:600;${/belmont fc/i.test(game.away)?'color:var(--yellow);':'color:#ffffff;'}">${game.away}</div>` : ''}
+        ${!isShort ? `<div style="font-size:0.72rem;font-weight:600;${/belmont fc/i.test(game.away)?'color:#3f72c9;':'color:var(--text);'}">${game.away}</div>` : ''}
         ${game.ref && !isShort ? `<div style="font-size:0.62rem;color:var(--muted);margin-top:1px;">Ref: ${game.ref}</div>` : ''}
       </div>`;
     }
 
-    const thStyle = `padding:11px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;white-space:nowrap;border-right:1px solid rgba(255,255,255,0.06);`;
+    const thStyle = `padding:11px 14px;text-align:center;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;white-space:nowrap;border-right:1px solid rgba(0,0,0,0.06);`;
 
     const pitchInfo = {};
     pitches.forEach(p => {
@@ -1463,10 +1463,10 @@ window._renderMatchDayTables = function() {
       <tr style="background:var(--blue2);">
         <th style="${thStyle}color:var(--muted);">Pitch &rarr;</th>`;
     pitches.forEach(p => {
-      theadHtml += `<th style="${thStyle}color:var(--yellow);">${p}</th>`;
+      theadHtml += `<th style="${thStyle}color:#0f2347;">${p}</th>`;
     });
     theadHtml += `<th style="${thStyle}color:var(--muted);">&larr; Pitch</th></tr>
-      <tr style="background:#0e2040;">
+      <tr style="background:var(--blue2);">
         <th style="${thStyle}color:var(--muted);font-size:0.55rem;">Slot &rarr;</th>`;
     pitches.forEach(p => {
       theadHtml += `<th style="${thStyle}color:var(--muted);font-size:0.6rem;">${pitchInfo[p]||''}</th>`;
@@ -1474,14 +1474,14 @@ window._renderMatchDayTables = function() {
     theadHtml += `<th style="${thStyle}font-size:0.55rem;color:var(--muted);">&larr; Slot</th></tr></thead>`;
     pt.innerHTML = theadHtml;
 
-    const timeTd  = `style="padding:0 12px;height:28px;font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:var(--muted);background:#0b1a30;border-right:2px solid rgba(253,184,19,0.2);white-space:nowrap;vertical-align:middle;text-align:center;"`;
-    const emptyTd = `style="height:28px;border-right:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);"`;
+    const timeTd  = `style="padding:0 12px;height:28px;font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:var(--muted);background:var(--blue2);border-right:2px solid rgba(253,184,19,0.2);white-space:nowrap;vertical-align:middle;text-align:center;"`;
+    const emptyTd = `style="height:28px;border-right:1px solid rgba(0,0,0,0.04);border-bottom:1px solid rgba(0,0,0,0.04);"`;
 
     const tbodyEl = document.createElement('tbody');
     slots.forEach((slotMins, si) => {
       const label = minsToLabel(slotMins);
       const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+      tr.style.borderBottom = '1px solid rgba(0,0,0,0.03)';
       let cells = `<td ${timeTd}>${label}</td>`;
 
       pitches.forEach((p, pi) => {
@@ -1505,7 +1505,7 @@ window._renderMatchDayTables = function() {
             }
           } else {
             const { game, span } = entries[0];
-            cells += `<td rowspan="${span}" style="padding:3px;vertical-align:top;border-right:1px solid rgba(253,184,19,0.15);background:rgba(22,47,82,0.9);">
+            cells += `<td rowspan="${span}" style="padding:3px;vertical-align:top;border-right:1px solid rgba(253,184,19,0.15);background:rgba(236,238,241,0.9);">
               ${gameBlock(game, span, false, false)}
             </td>`;
           }
@@ -1533,7 +1533,7 @@ window._renderMatchDayTables = function() {
       const fmt = m => `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;
       const items = allOverlapWarnings.map(w =>
         `<li style="margin:4px 0;">
-          <span style="color:var(--yellow);font-weight:700;">${w.pitch}</span>
+          <span style="color:#0f2347;font-weight:700;">${w.pitch}</span>
           ${w.date ? `<span style="color:var(--muted);font-size:0.7rem;"> (${w.date})</span>` : ''}
           — <span style="color:#ff8080;">${w.gameA.div}</span> (${fmt(w.aStart)}–${fmt(w.aEnd)})
           overlaps with <span style="color:#ff8080;">${w.gameB.div}</span> (${fmt(w.bStart)}–${fmt(w.bEnd)})
@@ -1581,15 +1581,15 @@ window._renderMatchDayFiltered = function() {
   }
   function highlightBFC(name) {
     return /belmont fc/i.test(name)
-      ? `<span style="color:var(--yellow);font-weight:800;">${name}</span>`
-      : `<span style="color:#ffffff;">${name}</span>`;
+      ? `<span style="color:#3f72c9;font-weight:800;">${name}</span>`
+      : `<span style="color:var(--text);">${name}</span>`;
   }
   function teamCell(name, conf) {
     return `<td style="padding:10px 14px;text-align:center;font-weight:600;font-size:0.84rem;"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${highlightBFC(name)} ${confIcon(conf)}</span></td>`;
   }
   function refCell(name, conf) {
     if (!name) return `<td style="padding:10px 14px;text-align:center;font-size:0.78rem;"></td>`;
-    return `<td style="padding:10px 14px;text-align:center;font-size:0.78rem;color:#ffffff;"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${name} ${confIcon(conf)}</span></td>`;
+    return `<td style="padding:10px 14px;text-align:center;font-size:0.78rem;color:var(--text);"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${name} ${confIcon(conf)}</span></td>`;
   }
 
   function tpBadge(tournament) {
@@ -1631,8 +1631,8 @@ window._renderMatchDayFiltered = function() {
         const confCellBg = bothConfirmed ? 'rgba(46,204,113,0.32)' : eitherDeclinedR ? 'rgba(231,76,60,0.32)' : 'rgba(243,156,18,0.28)';
         const confCellBorder = bothConfirmed ? 'rgba(46,204,113,0.7)' : eitherDeclinedR ? 'rgba(231,76,60,0.7)' : 'rgba(243,156,18,0.65)';
         const tr = document.createElement('tr');
-        tr.style.cssText = `border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''}`;
-        tr.onmouseover = () => tr.style.background = 'rgba(255,255,255,0.06)';
+        tr.style.cssText = `border-bottom:1px solid rgba(0,0,0,0.04);transition:background 0.1s;${rowBg?`background:${rowBg}`:''}`;
+        tr.onmouseover = () => tr.style.background = 'rgba(0,0,0,0.06)';
         tr.onmouseout  = () => tr.style.background = rowBg;
         tr.innerHTML = `
           <td style="padding:10px 14px;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--muted);white-space:nowrap;">${g.dateFmt}${weekdayTag(g.dateSort)}</td>
@@ -1640,7 +1640,7 @@ window._renderMatchDayFiltered = function() {
           <td style="padding:10px 14px;text-align:center;white-space:nowrap;">${tpBadge(g.tournament)}</td>
           ${teamCell(g.home, g.hConf)}
           ${teamCell(g.away, g.aConf)}
-          <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--yellow);">${g.ko}</td>
+          <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#0f2347;">${g.ko}</td>
           ${refCell(g.ref, g.refConf)}
           <td style="padding:10px 14px;text-align:center;font-size:0.75rem;color:var(--muted);font-style:italic;">${g.comments||'—'}</td>
           <td style="padding:10px 14px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fdb813;background:rgba(253,184,19,0.07);">${g.pitch}</td>
@@ -1706,9 +1706,9 @@ window._renderMatchDayFiltered = function() {
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <button class="breset" style="font-size:0.68rem;padding:3px 6px;" onclick="resetAll()">↺ Reset</button>
         <button id="results-print-btn" onclick="resultsPrint()"
-          style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#1a4a80,#0e2d55);border:1px solid rgba(253,184,19,0.35);color:var(--yellow);font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all 0.18s;"
-          onmouseover="this.style.borderColor='var(--yellow)';this.style.background='linear-gradient(135deg,#1f5a9e,#122f5a)'"
-          onmouseout="this.style.borderColor='rgba(253,184,19,0.35)';this.style.background='linear-gradient(135deg,#1a4a80,#0e2d55)'">
+          style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#3a3d42,#2b2e33);border:1px solid rgba(253,184,19,0.35);color:var(--yellow);font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:600;padding:5px 11px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all 0.18s;"
+          onmouseover="this.style.borderColor='var(--yellow)';this.style.background='linear-gradient(135deg,#4a4d54,#3a3d42)'"
+          onmouseout="this.style.borderColor='rgba(253,184,19,0.35)';this.style.background='linear-gradient(135deg,#3a3d42,#2b2e33)'">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4V1h8v3M2 8H1V4h10v4h-1M3 8v3h6V8" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
           Print Results
         </button>
@@ -1808,10 +1808,10 @@ function parseCSV(text) {
 }
 
 function showError(msg) {
-  document.body.innerHTML = `<div style="padding:40px;font-family:sans-serif;color:#e74c3c;background:#050d1a;min-height:100vh">
+  document.body.innerHTML = `<div style="padding:40px;font-family:sans-serif;color:#e74c3c;background:#f4f5f7;min-height:100vh">
     <h2 style="color:#fdb813;margin-bottom:12px">⚠ Could not load data</h2>
-    <p style="color:#f0f4f8;margin-bottom:8px">${msg}</p>
-    <p style="color:#8ba2c1;font-size:0.85rem">Make sure your Google Sheet is shared as <strong>"Anyone with the link"</strong> and that the Sheet ID and gid values are correct.</p>
+    <p style="color:#1c1f24;margin-bottom:8px">${msg}</p>
+    <p style="color:#6b7280;font-size:0.85rem">Make sure your Google Sheet is shared as <strong>"Anyone with the link"</strong> and that the Sheet ID and gid values are correct.</p>
   </div>`;
 }
 
@@ -2173,7 +2173,7 @@ function renderStats(filtered) {
       </div>
     </button>
     <button class="pill ${filters.st.size===3&&filters.st.has('win')&&filters.st.has('draw')&&filters.st.has('loss')?'active-pill':''}" onclick="selectResultsOnly()" style="flex:0 1 126px;min-width:0;">
-      <div class="v" style="color:var(--yellow)">${played.length}</div>
+      <div class="v" style="color:#0f2347">${played.length}</div>
       <div class="l">With Results</div>
     </button>
     <button class="pill ${act('win')}" onclick="selectOnlySt('win')" style="flex:0 1 112px;min-width:0;">
@@ -2297,8 +2297,8 @@ function resultsPrint() {
     // Style the clone for a clean dark background snapshot
     clone.style.cssText = [
       'position:fixed;top:0;left:0;z-index:-9999;pointer-events:none;',
-      'opacity:1;background:#0a1628;padding:24px;',
-      'font-family:\'DM Sans\',sans-serif;color:#e2e8f4;',
+      'opacity:1;background:#f4f5f7;padding:24px;',
+      'font-family:\'DM Sans\',sans-serif;color:#1c1f24;',
       'width:max-content;max-width:none;overflow:visible;'
     ].join('');
 
@@ -2369,7 +2369,7 @@ function resultsPrint() {
       const W = clone.scrollWidth;
       const H = clone.scrollHeight;
       html2canvas(clone, {
-        backgroundColor: '#0a1628', scale: 4, useCORS: true, allowTaint: true,
+        backgroundColor: '#f4f5f7', scale: 4, useCORS: true, allowTaint: true,
         logging: false, scrollX: 0, scrollY: 0, x: 0, y: 0,
         width: W, height: H, windowWidth: W, windowHeight: H,
       }).then(canvas => {
@@ -2610,7 +2610,7 @@ function renderInsights() {
         <td>${rankIcon(i)}</td>
         <td class="opp"><div class="team-name">${esc2(opp)}</div><div style="font-size:0.65rem;color:var(--muted)">${g.date} · ${g.division}</div></td>
         <td>${scoreChip(g.h_goals, g.a_goals, g.is_home)}</td>
-        <td><span style="color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:1rem">${tot}</span></td>
+        <td><span style="color:#0f2347;font-family:'Bebas Neue',sans-serif;font-size:1rem">${tot}</span></td>
       </tr>`;
     }),
     [null,null,null,null],true
@@ -2688,7 +2688,7 @@ function renderInsights() {
       const gd = s.gf - s.ga;
       const gdStr = gd>0?`<span style="color:var(--green)">+${gd}</span>`:gd<0?`<span style="color:var(--red)">${gd}</span>`:`<span style="color:var(--muted)">0</span>`;
       return `<tr>
-        <td style="font-family:'Bebas Neue',sans-serif;color:var(--yellow);white-space:nowrap">${age}</td>
+        <td style="font-family:'Bebas Neue',sans-serif;color:#0f2347;white-space:nowrap">${age}</td>
         <td style="text-align:center;color:var(--green);font-family:'Bebas Neue',sans-serif">${s.w}</td>
         <td style="text-align:center;font-family:'Bebas Neue',sans-serif">${s.d}</td>
         <td style="text-align:center;color:var(--red);font-family:'Bebas Neue',sans-serif">${s.l}</td>
@@ -2717,7 +2717,7 @@ function renderInsights() {
     dateSorted.map(([date,s]) => {
       const tot = s.w+s.d+s.l;
       const pct = tot>0?Math.round(s.w/tot*100):0;
-      const pctCol = pct>=60?'var(--green)':pct>=40?'var(--yellow)':'var(--red)';
+      const pctCol = pct>=60?'var(--green)':pct>=40?'#0f2347':'var(--red)';
       return `<tr>
         <td style="font-family:'Bebas Neue',sans-serif;color:var(--muted);white-space:nowrap">${date}</td>
         <td style="text-align:center;color:var(--green);font-family:'Bebas Neue',sans-serif">${s.w}</td>
@@ -3109,15 +3109,15 @@ function renderPerfTable() {
   }
 
   tbody.innerHTML = rows.map(r => `
-    <tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-      <td style="font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--yellow);padding:12px 15px;">${r.age}</td>
+    <tr style="border-bottom:1px solid rgba(0,0,0,0.04);transition:background 0.1s;" onmouseover="this.style.background='rgba(0,0,0,0.03)'" onmouseout="this.style.background=''">
+      <td style="font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:#0f2347;padding:12px 15px;">${r.age}</td>
       <td style="font-weight:700;color:var(--text);font-size:0.88rem;padding:12px 15px;">${r.div}</td>
       ${numCell(r.played)}
       ${numCell(r.w, 'var(--green)')}
       ${numCell(r.d)}
       ${numCell(r.l, 'var(--red)')}
       ${numCell(r.nr, 'var(--amber)')}
-      ${numCell(r.pts, 'var(--yellow)')}
+      ${numCell(r.pts, '#0f2347')}
       ${ppgCell(r.ppg, r.withResult)}
       ${npCell(r.np, r.scheduled)}
     </tr>
@@ -3149,13 +3149,13 @@ function renderPerfTable() {
 
     tfoot.innerHTML = `
       <tr style="border-top:2px solid rgba(253,184,19,0.3);background:rgba(253,184,19,0.06);">
-        <td colspan="2" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--yellow);padding:11px 15px;letter-spacing:0.06em;">TOTALS</td>
+        <td colspan="2" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#0f2347;padding:11px 15px;letter-spacing:0.06em;">TOTALS</td>
         ${totCell(tot.played)}
         ${totCell(tot.w, 'var(--green)')}
         ${totCell(tot.d)}
         ${totCell(tot.l, 'var(--red)')}
         ${totCell(tot.nr, 'var(--amber)')}
-        ${totCell(tot.pts, 'var(--yellow)')}
+        ${totCell(tot.pts, '#0f2347')}
         <td style="text-align:center;padding:11px 15px;">
           <span style="display:inline-block;background:${totPpgCol}22;color:${totPpgCol};border:1px solid ${totPpgCol}55;
             font-family:'Bebas Neue',sans-serif;font-size:1.05rem;padding:2px 10px;border-radius:6px;min-width:52px;font-weight:700;">
@@ -3306,7 +3306,7 @@ function renderPerfTable() {
     const filtered = ALL.filter(g => haMatchGame(g, f, null));
 
     const rcEl = document.getElementById('ha-rcount');
-    if (rcEl) rcEl.innerHTML = `<span style="color:var(--yellow);font-weight:700;">${filtered.length}</span> games`;
+    if (rcEl) rcEl.innerHTML = `<span style="color:#0f2347;font-weight:700;">${filtered.length}</span> games`;
 
     const subEl = document.getElementById('ha-table-sub');
     if (subEl) subEl.textContent = `by ${f.selView === 'age' ? 'Age Group' : 'Division'} · all filters applied`;
@@ -3388,7 +3388,7 @@ function renderPerfTable() {
 
     function pctBar(pct, colour) {
       return `<div style="display:flex;align-items:center;gap:5px;">
-        <div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;min-width:30px;max-width:54px;overflow:hidden;">
+        <div style="flex:1;height:4px;background:rgba(0,0,0,0.06);border-radius:2px;min-width:30px;max-width:54px;overflow:hidden;">
           <div style="width:${pct}%;height:100%;background:${colour};border-radius:2px;"></div>
         </div>
         <span style="font-family:'Bebas Neue',sans-serif;font-size:0.88rem;color:${colour};min-width:28px;">${pct}%</span>
@@ -3403,8 +3403,8 @@ function renderPerfTable() {
 
     tbody.innerHTML = rows.map(r => {
       const showBoth = f.selView !== 'age';
-      return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);" onmouseover="this.style.background='rgba(255,255,255,0.03)'" onmouseout="this.style.background=''">
-        <td style="font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--yellow);padding:12px 15px;">${r.age}</td>
+      return `<tr style="border-bottom:1px solid rgba(0,0,0,0.04);" onmouseover="this.style.background='rgba(0,0,0,0.03)'" onmouseout="this.style.background=''">
+        <td style="font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:#0f2347;padding:12px 15px;">${r.age}</td>
         <td style="font-weight:700;color:var(--text);font-size:0.88rem;padding:12px 15px;">${showBoth ? r.div : '<span style="opacity:0.25">—</span>'}</td>
         <td style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;padding:12px 15px;">${r.total}</td>
         <td style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#74b9ff;padding:12px 15px;">${r.home > 0 ? r.home : '<span style="opacity:0.25">–</span>'}</td>
@@ -3421,7 +3421,7 @@ function renderPerfTable() {
       const tHomePct = totAll > 0 ? Math.round(totHome / totAll * 100) : 0;
       const tAwayPct = totAll > 0 ? Math.round(totAway / totAll * 100) : 0;
       tfoot.innerHTML = `<tr style="border-top:2px solid rgba(253,184,19,0.3);background:rgba(253,184,19,0.06);">
-        <td colspan="2" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--yellow);padding:11px 15px;letter-spacing:0.06em;">TOTALS</td>
+        <td colspan="2" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#0f2347;padding:11px 15px;letter-spacing:0.06em;">TOTALS</td>
         <td style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;font-weight:700;padding:11px 15px;">${totAll}</td>
         <td style="text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:#74b9ff;padding:11px 15px;">${totHome}</td>
         <td style="padding:11px 15px;">${pctBar(tHomePct,'#74b9ff')}</td>
@@ -3462,7 +3462,7 @@ function renderPerfTable() {
     ctx.clearRect(0, 0, W, H);
 
     if (!points.length) {
-      ctx.fillStyle = 'rgba(139,162,193,0.4)';
+      ctx.fillStyle = 'rgba(55,65,81,0.75)';
       ctx.font = '13px DM Sans, sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('No data', W / 2, H / 2);
@@ -3477,13 +3477,13 @@ function renderPerfTable() {
     [0, 25, 75, 100].forEach(pct => {
       const y = PAD_T + chartH - (pct / 100) * chartH;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.strokeStyle = 'rgba(0,0,0,0.05)';
       ctx.lineWidth = 0.5;
       ctx.setLineDash([]);
       ctx.moveTo(PAD_L, y);
       ctx.lineTo(W - PAD_R, y);
       ctx.stroke();
-      ctx.fillStyle = 'rgba(139,162,193,0.5)';
+      ctx.fillStyle = 'rgba(55,65,81,0.85)';
       ctx.font = '9px DM Sans, sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(pct + '%', PAD_L - 4, y + 3);
@@ -3544,7 +3544,7 @@ function renderPerfTable() {
       const labelEvery = Math.ceil(n / Math.floor(chartW / 56));
       if (i % labelEvery === 0 || i === n - 1) {
         ctx.save();
-        ctx.fillStyle = 'rgba(139,162,193,0.7)';
+        ctx.fillStyle = 'rgba(55,65,81,0.9)';
         ctx.font = '9px DM Sans, sans-serif';
         ctx.textAlign = 'center';
         ctx.translate(cx, H - PAD_B + 14);
@@ -3565,7 +3565,7 @@ function renderPerfTable() {
     ctx.stroke();
     ctx.setLineDash([]);
     // Label
-    ctx.fillStyle = 'rgba(253,184,19,0.7)';
+    ctx.fillStyle = 'rgba(139,101,10,0.9)';
     ctx.font = 'bold 9px DM Sans, sans-serif';
     ctx.textAlign = 'right';
     ctx.fillText('50%', PAD_L - 4, y50 + 3);
@@ -3584,7 +3584,7 @@ function renderPerfTable() {
         const hp = hit.pt.total > 0 ? Math.round(hit.pt.home / hit.pt.total * 100) : 0;
         const ap = hit.pt.total > 0 ? Math.round(hit.pt.away / hit.pt.total * 100) : 0;
         tooltip.innerHTML =
-          `<div style="font-family:'Bebas Neue',sans-serif;font-size:0.95rem;color:var(--yellow);margin-bottom:3px;">${hit.pt.label}</div>` +
+          `<div style="font-family:'Bebas Neue',sans-serif;font-size:0.95rem;color:#0f2347;margin-bottom:3px;">${hit.pt.label}</div>` +
           `<div style="color:var(--text);">Total: <strong>${hit.pt.total}</strong></div>` +
           `<div style="color:#74b9ff;">🏠 Home: ${hit.pt.home} <span style="opacity:0.7">(${hp}%)</span></div>` +
           `<div style="color:#fd79a8;">✈️ Away: ${hit.pt.away} <span style="opacity:0.7">(${ap}%)</span></div>`;
@@ -3655,7 +3655,7 @@ function renderPerfTable() {
             <th style="text-align:center;">Draws</th>
             <th style="text-align:center;color:var(--red);">Losses</th>
             <th style="text-align:center;color:var(--amber);">Not Reported</th>
-            <th id="perf-th-pts" style="text-align:center;color:var(--yellow);cursor:pointer;user-select:none;" onclick="if(window._sortPerfBy) window._sortPerfBy('pts')" title="Sort by Total Points">Total Points ↕</th>
+            <th id="perf-th-pts" style="text-align:center;color:#0f2347;cursor:pointer;user-select:none;" onclick="if(window._sortPerfBy) window._sortPerfBy('pts')" title="Sort by Total Points">Total Points ↕</th>
             <th id="perf-th-ppg" style="text-align:center;cursor:pointer;user-select:none;" onclick="if(window._sortPerfBy) window._sortPerfBy('ppg')" title="Sort by Points Per Game">Pts / Game ↕</th>
             <th id="perf-th-np" style="text-align:center;color:var(--muted);cursor:pointer;user-select:none;" onclick="if(window._sortPerfBy) window._sortPerfBy('np')" title="Sort by Cancelled">Total Cancelled ↕</th>
           </tr>
@@ -3753,7 +3753,7 @@ function renderPerfTable() {
     </div>
     <div style="position:relative;width:100%;overflow-x:auto;">
       <canvas id="ha-timeline-canvas" height="160" style="display:block;min-width:300px;width:100%;cursor:crosshair;"></canvas>
-      <div id="ha-chart-tooltip" style="position:fixed;pointer-events:none;display:none;background:rgba(5,13,26,0.97);border:1px solid rgba(253,184,19,0.35);border-radius:8px;padding:9px 13px;font-size:0.72rem;line-height:1.7;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div>
+      <div id="ha-chart-tooltip" style="position:fixed;pointer-events:none;display:none;background:rgba(244,245,247,0.97);border:1px solid rgba(253,184,19,0.35);border-radius:8px;padding:9px 13px;font-size:0.72rem;line-height:1.7;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.5);"></div>
     </div>
   </div>
 
@@ -3762,7 +3762,7 @@ function renderPerfTable() {
 
     <!-- Summary pills (left) -->
     <div style="display:flex;flex-direction:column;gap:12px;min-width:180px;flex:0 0 auto;">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.06em;color:var(--yellow);margin-bottom:2px;">Summary</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.06em;color:#0f2347;margin-bottom:2px;">Summary</div>
       <div id="ha-summary-pills" style="display:flex;flex-direction:column;gap:10px;">
         <!-- filled by JS -->
       </div>
