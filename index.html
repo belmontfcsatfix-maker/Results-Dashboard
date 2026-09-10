@@ -1114,7 +1114,7 @@ function renderMatchDay() {
   function highlightBFC(name) {
     return /belmont fc/i.test(name)
       ? `<span style="color:#3f72c9;font-weight:800;">${name}</span>`
-      : `<span style="color:var(--text);">${name}</span>`;
+      : `<span style="color:var(--text);font-weight:400;">${name}</span>`;
   }
   function teamCell(name, conf) {
     return `<td style="padding:10px 14px;text-align:center;font-weight:600;font-size:0.84rem;"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${highlightBFC(name)} ${confIcon(conf)}</span></td>`;
@@ -1460,21 +1460,21 @@ window._renderMatchDayTables = function() {
     pt.style.cssText = 'border-collapse:collapse;min-width:600px;width:100%;';
 
     let theadHtml = `<thead>
-      <tr style="background:var(--blue2);">
-        <th style="${thStyle}color:var(--muted);">Pitch &rarr;</th>`;
+      <tr style="background:rgba(253,184,19,0.08);">
+        <th style="${thStyle}color:#0f2347;">Pitch &rarr;</th>`;
     pitches.forEach(p => {
       theadHtml += `<th style="${thStyle}color:#0f2347;">${p}</th>`;
     });
-    theadHtml += `<th style="${thStyle}color:var(--muted);">&larr; Pitch</th></tr>
-      <tr style="background:var(--blue2);">
-        <th style="${thStyle}color:var(--muted);font-size:0.55rem;">Slot &rarr;</th>`;
+    theadHtml += `<th style="${thStyle}color:#0f2347;">&larr; Pitch</th></tr>
+      <tr style="background:rgba(253,184,19,0.08);">
+        <th style="${thStyle}color:#0f2347;font-size:0.55rem;">Slot &rarr;</th>`;
     pitches.forEach(p => {
-      theadHtml += `<th style="${thStyle}color:var(--muted);font-size:0.6rem;">${pitchInfo[p]||''}</th>`;
+      theadHtml += `<th style="${thStyle}color:#0f2347;font-size:0.6rem;">${pitchInfo[p]||''}</th>`;
     });
-    theadHtml += `<th style="${thStyle}font-size:0.55rem;color:var(--muted);">&larr; Slot</th></tr></thead>`;
+    theadHtml += `<th style="${thStyle}font-size:0.55rem;color:#0f2347;">&larr; Slot</th></tr></thead>`;
     pt.innerHTML = theadHtml;
 
-    const timeTd  = `style="padding:0 12px;height:28px;font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:var(--muted);background:var(--blue2);border-right:2px solid rgba(253,184,19,0.2);white-space:nowrap;vertical-align:middle;text-align:center;"`;
+    const timeTd  = `style="padding:0 12px;height:28px;font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:#0f2347;background:rgba(253,184,19,0.08);border-right:2px solid rgba(253,184,19,0.2);white-space:nowrap;vertical-align:middle;text-align:center;"`;
     const emptyTd = `style="height:28px;border-right:1px solid rgba(0,0,0,0.04);border-bottom:1px solid rgba(0,0,0,0.04);"`;
 
     const tbodyEl = document.createElement('tbody');
@@ -1521,7 +1521,7 @@ window._renderMatchDayTables = function() {
     pt.appendChild(tbodyEl);
 
     const tableWrap = document.createElement('div');
-    tableWrap.style.cssText = 'border-radius:12px;border:1px solid var(--border);overflow-x:auto;background:var(--card);margin-bottom:28px;';
+    tableWrap.style.cssText = 'border-radius:12px;border:1px solid var(--border);overflow-x:auto;background:rgba(253,184,19,0.05);margin-bottom:28px;';
     tableWrap.appendChild(pt);
     container.appendChild(tableWrap);
   });
@@ -1582,7 +1582,7 @@ window._renderMatchDayFiltered = function() {
   function highlightBFC(name) {
     return /belmont fc/i.test(name)
       ? `<span style="color:#3f72c9;font-weight:800;">${name}</span>`
-      : `<span style="color:var(--text);">${name}</span>`;
+      : `<span style="color:var(--text);font-weight:400;">${name}</span>`;
   }
   function teamCell(name, conf) {
     return `<td style="padding:10px 14px;text-align:center;font-weight:600;font-size:0.84rem;"><span style="display:inline-flex;align-items:center;gap:6px;justify-content:center;">${highlightBFC(name)} ${confIcon(conf)}</span></td>`;
@@ -1721,18 +1721,18 @@ window._renderMatchDayFiltered = function() {
 
 <div class="twrap-outer">
   <div class="rcount" id="rcount"></div>
-  <div class="twrap">
+  <div class="twrap" style="background:rgba(253,184,19,0.03);">
     <table>
       <thead>
-        <tr>
-          <th onclick="sortBy('date_sort')">Date ↕</th>
-          <th onclick="sortBy('group')">Group ↕</th>
-          <th onclick="sortBy('division')">Division ↕</th>
-          <th>Type</th>
-          <th onclick="sortBy('home')" style="width:10%">Home ↕</th>
-          <th style="text-align:center">Result</th>
-          <th onclick="sortBy('away')" style="width:10%">Away ↕</th>
-          <th onclick="sortBy('referee')">Referee ↕</th>
+        <tr style="background:rgba(253,184,19,0.06);">
+          <th onclick="sortBy('date_sort')" style="color:#0f2347;">Date ↕</th>
+          <th onclick="sortBy('group')" style="color:#0f2347;">Group ↕</th>
+          <th onclick="sortBy('division')" style="color:#0f2347;">Division ↕</th>
+          <th style="color:#0f2347;">Type</th>
+          <th onclick="sortBy('home')" style="width:10%;color:#0f2347;">Home ↕</th>
+          <th style="text-align:center;color:#0f2347;">Result</th>
+          <th onclick="sortBy('away')" style="width:10%;color:#0f2347;">Away ↕</th>
+          <th onclick="sortBy('referee')" style="color:#0f2347;">Referee ↕</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
